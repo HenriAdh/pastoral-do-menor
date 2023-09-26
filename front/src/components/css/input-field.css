@@ -1,0 +1,40 @@
+.DivInput {
+    position: relative;
+    width: 100%;
+    margin-bottom: 2vh;
+}
+
+.DivInput input {
+    width: 100%;
+    font: inherit;
+    color: #000;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    outline: 2px solid #000;
+    background-color: transparent;
+    transition: outline-color 500ms;
+}
+
+.DivInput input:is(:focus, :valid){
+    outline-color: #000;
+}
+
+.DivInput label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    translate: 10px 10px;
+    color: #000;
+    transition: translate 500ms, scale 500ms;
+}
+
+.DivInput label:hover {cursor: text;}
+
+.DivInput input:focus + label,
+.DivInput input:valid + label{
+    padding-inline: 5px;
+    translate: 10px -14px;
+    scale: 0.8;
+    background-color: #FFF;
+}

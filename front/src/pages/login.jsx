@@ -1,27 +1,27 @@
 import React from "react";
+import './css/login.css';
+import InputField from "../components/input-field";
+import Button from "../components/button";
+import Link from "../components/link";
+import Card from "../components/card";
 
 const LoginPage = () => {
     return (
-        <>
-            <div className="content">
-                <h1>Login</h1>
-                <div className="input-field">
-                    <label htmlFor="edtEmail">E-mail: </label>
-                    <input type="email" id="edtEmail" />
-                </div>
-                <br />
-                <div className="inputfield">
-                    <label htmlFor="edtPass">Senha: </label>
-                    <input type="password" id="edtPass" />
-                </div>
-                <br />
-                <div className="buttons">
-                    <button>Entrar</button>
-                    <button>Registrar</button>
-                </div>
-                <a href="#">Esqueci minha senha?</a>
-            </div>
-        </>
+        <div className="DivPrinc">
+            <Card 
+                width="70vw"
+                title={'Login'}
+                content={
+                    <form action="">
+                        <InputField id={'edtEmail'} label={'E-mail:'} />
+                        <InputField id={'edtPass'} label={'Senha:'} type={'password'} />
+                        <Button id={'btnSignIn'} type="submit" text={'Entrar'} />
+                        <Button id={'btnSignUp'} type="button" text={'Registrar'} />
+                        <Link text={'Esqueci minha senha?'} link={"www.youtube.com"} />
+                    </form>
+                }
+            />
+        </div>
     )
 }
 
