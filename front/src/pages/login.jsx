@@ -6,6 +6,10 @@ import Link from "../components/link";
 import Card from "../components/card";
 
 const LoginPage = () => {
+    const setPage = () =>{
+        window.location.href = "/Registro";
+    }
+
     return (
         <div className="DivPrinc">
             <Card 
@@ -16,7 +20,7 @@ const LoginPage = () => {
                         <InputField id={'edtEmail'} label={'E-mail:'} />
                         <InputField id={'edtPass'} label={'Senha:'} type={'password'} />
                         <Button id={'btnSignIn'} type="submit" text={'Entrar'} />
-                        <Button id={'btnSignUp'} type="button" text={'Registrar'} />
+                        <Button onclick={setPage()} id={'btnSignUp'} type="button" text={'Registrar'} />
                         <Link text={'Esqueci minha senha?'} link={"www.youtube.com"} />
                     </form>
                 }
