@@ -1,10 +1,14 @@
 import React from "react";
 import './css/button.css';
 
-const Button = ({ id, type='button', text, onClick }) => {
+const Button = ({ id, type='button', text, onClick=()=>{} }) => {
+    const handleClick = () => {
+        onClick();
+    };
+
     return (
-        <div>
-            <input className="input-button" id={id} name={id} type={type} value={text} onClick={onClick} />
+        <div className="DivInput-button">
+            <input className="input-button" id={id} name={id} type={type} value={text} onClick={handleClick} />
         </div>
     )
 }

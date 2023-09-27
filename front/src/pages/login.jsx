@@ -1,14 +1,12 @@
 import React from "react";
 import './css/login.css';
+import { Link, useNavigate } from "react-router-dom";
 import InputField from "../components/input-field";
 import Button from "../components/button";
-import Link from "../components/link";
 import Card from "../components/card";
 
 const LoginPage = () => {
-    const setPage = () =>{
-        window.location.href = "/Registro";
-    }
+    const navigate = useNavigate();
 
     return (
         <div className="DivPrinc">
@@ -19,9 +17,9 @@ const LoginPage = () => {
                     <form action="">
                         <InputField id={'edtEmail'} label={'E-mail:'} />
                         <InputField id={'edtPass'} label={'Senha:'} type={'password'} />
-                        <Button id={'btnSignIn'} type="submit" text={'Entrar'} />
-                        <Button onclick={setPage()} id={'btnSignUp'} type="button" text={'Registrar'} />
-                        <Link text={'Esqueci minha senha?'} link={"www.youtube.com"} />
+                        <Button id={'btnSignIn'} type="submit" text={'Entrar'} onClick={()=>navigate('/home/relatorio')}/>
+                        <Button onClick={()=>navigate('/registrar')} id={'btnSignUp'} type="button" text={'Registrar'} />
+                        <Link to={'./restaurar-senha'}>Esqueci minha senha?</Link>
                     </form>
                 }
             />

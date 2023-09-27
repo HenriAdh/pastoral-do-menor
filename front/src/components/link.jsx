@@ -1,6 +1,6 @@
 import React from "react";
 
-const Link = ({ link='#', text }) => {
+const ALink = ({ link='#', text }) => {
     return (
         <div>
             <a href={link}>{text}</a>
@@ -8,4 +8,4 @@ const Link = ({ link='#', text }) => {
     )
 }
 
-export default Link;
+export default ALink;
