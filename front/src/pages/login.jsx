@@ -13,11 +13,23 @@ const LoginPage = () => {
     const handleChange = (e) => {
         setFormData({...formData, [e.target.name]: e.target.value})
     }
-    const handleSubmit = (e) => {
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        alert('Usuário logado com sucesso!');
-        navigate('/home/relatorio');
+        try{
+            const result = await loginUser(formData)
+            alert(result);
+            navigate('/home/relatorio/estoque');
+        } catch (err){
+            alert(err);
+        }
     }
+
+    const loginUser = async (arrayUser) => {
+        // chamar o back;
+        console.log(arrayUser);
+        return 'Usuário logado com sucesso!';
+    } 
 
     return (
         <div className="DivPrinc center">

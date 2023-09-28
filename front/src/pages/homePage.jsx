@@ -21,7 +21,7 @@ const HomePage = () => {
                     <Outlet />
                 </div>
                 <div className="nomarginleft extrabottom fullwidth center">
-                    <footer>nu ca vi boi na internet.<br/> <Link to={'/'}>voltar</Link></footer>
+                    <footer><Link to={'/'} className="link">voltar</Link></footer>
                 </div>
             </div>
         </div>

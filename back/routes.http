@@ -1,0 +1,27 @@
+POST http://localhost:3333/users
+Content-Type: application/json
+
+{
+    "name": "henrique",
+    "old": 18,
+    "email": "henripires123@gmail.com"
+}
+
+###
+
+GET http://localhost:3333/users?search=isabella
+
+###
+
+PUT http://localhost:3333/users/cf5814dd-1607-47a7-b016-c17dd8cfd627
+Content-Type: application/json
+
+{
+    "name": "rafael",
+    "old": 18,
+    "email": "henripires123@gmail.com"
+}
+
+###
+
+DELETE http://localhost:3333/users/cf5814dd-1607-47a7-b016-c17dd8cfd627

@@ -20,15 +20,30 @@ const Register =() =>{
     const handleChange = (e) => {
         setFormData({...formData, [e.target.name]: e.target.value})
     }
-    const handleSubmit = (e) => {
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        if (formData.edtPass === formData.edtConfirmPass) {
-            alert('Usuário criado com sucesso!');
-            navigate('/');
+        if (formData.edtPass === formData.edtConfirmPass && formData.edtPass.length >= 8) {
+            try{
+                const result = await createUser(formData);
+                alert(result);
+                navigate('/');
+
+            }
+            catch(err){
+                alert(err)
+            }
         } else {
-            alert('Senhas não coincidem.');
+            alert('Erro no campo senha.');
         }
     }
+
+    const createUser = (arrayUser) => {
+        // Colocar a chamada ao back
+        console.log(arrayUser);
+        return 'Usuário criado com sucesso!';
+    }
+
     return (
         <div className="DivRegis center">
             <Card 
