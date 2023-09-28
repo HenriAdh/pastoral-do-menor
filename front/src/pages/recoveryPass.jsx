@@ -5,7 +5,7 @@ const RecoveryPage = () => {
     return(
         <div>
             <h1>Recuperar senha</h1>
-            <Link to={'/'} >Voltar</Link>
+            <Link to={'/'} className="link" >Voltar</Link>
         </div>
     )
 }

@@ -1,4 +1,64 @@
 .App {
   text-align: center;
+  left: 0;
 }
 
+.link {
+  color: #000;
+}
+.link:visited{
+  color: #000;
+}
+
+.fullwidth {
+  width: 100%;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-around;
+}
+
+.DivButtons {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.center {
+  display: flex;
+  justify-content: center;
+}
+
+.button {
+  text-decoration: none;
+}
+
+.margin {
+  margin-inline: 5px;
+}
+.margintop {
+  margin-top: 5px;
+}
+.marginbottom {
+  margin-bottom: 5px;
+}
+.nomarginleft{
+  left: 0;
+}
+
+.DivBox {
+    width: 100%;
+    border: 2px solid #111;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+* {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.extrabottom {
+  position: absolute;
+  top: 95%;
+}
