@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import './css/homePage.css';
 import { Outlet } from "react-router";
 import { Link } from "react-router-dom";
@@ -15,10 +15,12 @@ const HomePage = () => {
                     <span> | </span>
                     <Link to='nova-saida' className="margin button link">Nova saida</Link>
                     <span> | </span>
-                    <Link to='relatorio' className="margin button link">relatorio</Link>
+                    <Link to='relatorio/estoque' className="margin button link">relatorio</Link>
                 </div>
                 <div className="DivBox">
-                    <Outlet />
+                    <Suspense fallback={<h1>Carregando...</h1>} >
+                        <Outlet />
+                    </Suspense>
                 </div>
                 <div className="nomarginleft extrabottom fullwidth center">
                     <footer><Link to={'/'} className="link">voltar</Link></footer>

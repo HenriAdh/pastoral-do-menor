@@ -43,6 +43,10 @@
   align-items: center;
 }
 
+.gap5{
+  gap: 5px;
+}
+
 .button {
   text-decoration: none;
 }

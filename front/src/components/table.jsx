@@ -26,7 +26,7 @@ export const TableBody = ({ dataBody }) => {
                 dataBody.map(row => {
                     const keys = Object.keys(row);
                     return (
-                        <tr>
+                        <tr key={row['ID']}>
                             {
                                 keys.map(key => {
                                     return <td key={key}>{row[key]}</td>
