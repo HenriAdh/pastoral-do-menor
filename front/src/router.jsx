@@ -11,6 +11,7 @@ import Report from "./pages/subPages/report";
 import Stock from "./pages/subPages/reports/stock";
 import OpenRequests from "./pages/subPages/reports/openRequests";
 import ClosedRequests from "./pages/subPages/reports/closedRequests";
+import Admin from "./pages/admin";
 
 const Routers = () => {
     return (
@@ -20,6 +21,13 @@ const Routers = () => {
                     path='/'
                     element={
                         <LoginPage />
+                    }
+                    errorElement={<Error404 />}
+                />
+                <Route
+                    path='/hangarekamaori'
+                    element={
+                        <Admin/>
                     }
                     errorElement={<Error404 />}
                 />

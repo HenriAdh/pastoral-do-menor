@@ -1,0 +1,9 @@
+.list {
+    width: max-content;
+    display: flex;
+    flex-direction: column;
+}
+
+.li {
+    margin-bottom: 10px;
+}

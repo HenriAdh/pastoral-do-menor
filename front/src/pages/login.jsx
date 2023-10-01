@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import './css/login.css';
+//import css from './css/login.module.css';
 import { Link, useNavigate } from "react-router-dom";
 import InputField from "../components/input-field";
 import Button from "../components/button";
@@ -18,8 +18,8 @@ const LoginPage = () => {
         e.preventDefault();
         try{
             const result = await loginUser(formData)
-            alert(result);
-            navigate('/home/relatorio/estoque');
+            result ? alert('Usuário logado com sucesso!') : alert('E-mail ou senha inválidos.');
+            if (result) navigate('/home/relatorio/estoque');
         } catch (err){
             alert(err);
         }
@@ -27,8 +27,8 @@ const LoginPage = () => {
 
     const loginUser = async (arrayUser) => {
         // chamar o back;
-        console.log(arrayUser);
-        return 'Usuário logado com sucesso!';
+        const isCorrect = arrayUser['edtEmail'] === 'emailteste@email.com' && arrayUser['edtPass'] === 'senhaTeste123';
+        return isCorrect;
     } 
 
     return (
@@ -51,9 +51,12 @@ const LoginPage = () => {
                         />
                         <div className="DivButtons marginbottom">
                             <Button id={'btnSignIn'} type="submit" text={'Entrar'} />
-                            <Button onClick={()=>navigate('/registrar')} id={'btnSignUp'} type="button" text={'Registrar'} />
                         </div>
                             <Link to={'./restaurar-senha'} className="link margintop">Esqueci minha senha?</Link>
+                            <br/><br/><br/>
+                            <p><u>E-mail e senhas temporarias: </u></p>
+                            <>E-mail: emailteste@email.com</><br />
+                            <>Senha: senhaTeste123</>
                     </form>
                 }
             />

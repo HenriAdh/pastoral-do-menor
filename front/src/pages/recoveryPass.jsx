@@ -23,7 +23,6 @@ const RecoveryPage = () => {
 
     const sendEmail = async (arrayEmail) => {
         // chama o back
-        console.log(arrayEmail);
         return 'E-mail enviado.';
     }
 
