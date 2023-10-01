@@ -14,7 +14,7 @@ const HomePage = () => {
         <div className="center">
             <div className={css.homePage}>
                 <div className="DivBox hcenter gap5">
-                    {isAdmin?<img src="../../logo192.png" alt="admin" height={'20px'} onClick={() => navigate('/hangarekamaori') } />:<></>}
+                    {isAdmin?<img src="../../defaultUser.png" alt="admin" height={'20px'} onClick={() => navigate('/hangarekamaori') } />:<></>}
                     <span>Controle de estoque - Pastoral do Menor</span>
                 </div>
                 <div className="DivBox">
