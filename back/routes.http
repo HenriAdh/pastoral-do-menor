@@ -1,27 +1,32 @@
-POST http://localhost:3333/users
+POST http://localhost:3333/register
 Content-Type: application/json
+Allow: POST
 
 {
-    "name": "henrique",
-    "old": 18,
-    "email": "henripires123@gmail.com"
+    "name": "Henrique Adhmann Pires",
+    "username": "henrique.pires",
+    "email": "henrique.pires@gmail.com",
+    "pass": "123456",
+    "adm": true
 }
 
 ###
 
-GET http://localhost:3333/users?search=isabella
+GET http://localhost:3333/login?search=
 
 ###
 
-PUT http://localhost:3333/users/cf5814dd-1607-47a7-b016-c17dd8cfd627
+PUT http://localhost:3333/users/a294bd99-b0ff-4371-b86f-197a4ea25ddf
 Content-Type: application/json
 
 {
-    "name": "rafael",
-    "old": 18,
-    "email": "henripires123@gmail.com"
+    "name": "Henrique Adhmann Pires",
+    "username": "henrique.pires",
+    "email": "henrique.pires@gmail.com",
+    "pass": "123456",
+    "adm": false
 }
 
 ###
 
-DELETE http://localhost:3333/users/cf5814dd-1607-47a7-b016-c17dd8cfd627
+DELETE http://localhost:3333/users/5d99f908-6d2b-40f0-9595-3cb6b7d8e043

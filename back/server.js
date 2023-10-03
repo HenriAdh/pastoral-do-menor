@@ -5,37 +5,41 @@ const server = fastify();
 
 const database = new databasememory();
 
-server.post('/users', (req, res) => {
-    const { name, old, email } = req.body;
-    console.log(name, old, email);
-
+server.post('/register', (req, res) => {
+    const { name, username, email, pass, adm } = req.body;
     database.create({
         name,
-        old,
+        username,
         email,
+        pass,
+        adm,
     });
 
-    return res.status(201).send();
+    return res.status(201).send('Criado com sucesso!');
 })
 
-server.get('/users', (req, res) => {
+server.get('/login', (req, res) => {
     const search = req.query.search;
     const users = database.list(search);
+
+    console.log(users);
 
     return users
 })
 
 server.put('/users/:id', (req, res) => {
     const userId = req.params.id;
-    const { name, old, email } = req.body;
+    const { name, username, email, pass, adm } = req.body;
 
     database.update(userId, {
-        name, 
-        old, 
+        name,
+        username,
         email,
+        pass,
+        adm
     });
 
-    return res.status(204).send();
+    return res.status(204).send('Atualizado com sucesso!');
 })
 
 server.delete('/users/:id', (req, res) => {
@@ -43,7 +47,7 @@ server.delete('/users/:id', (req, res) => {
 
     database.delete(userId)
 
-    return res.status(204).send();
+    return res.status(204).send('Deletado com sucesso!');
 })
 
 server.listen({

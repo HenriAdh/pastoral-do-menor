@@ -8,8 +8,8 @@ import Button from "../components/button";
 const Register =() =>{
     const [formData, setFormData] = useState(
         {
-            edName: '', 
-            edUserName: '', 
+            edtName: '', 
+            edtUserName: '', 
             edtEmail: '', 
             edtPass: '', 
         }
@@ -33,9 +33,20 @@ const Register =() =>{
         }
     }
 
-    const createUser = (arrayUser) => {
-        // Colocar a chamada ao back
-        return 'Usuário criado com sucesso!';
+    const createUser = async (arrayUser) => {
+        // const result = await fetch('http://localhost:3333/register/', {
+        //     method: 'POST',
+        //     headers: { 'Content-Type': 'application/json', 'Allow': 'POST, HEAD, OPTIONS'},
+        //     body: JSON.stringify({ 
+        //         name: arrayUser.edName,
+        //         username: arrayUser.edtUserName,
+        //         email: arrayUser.edtEmail,
+        //         pass: arrayUser.edtPass,
+        //         adm: true, })
+        //     }
+        // )
+        // return result.text();
+         return 'Usuario criado com sucesso'
     }
 
     return (
@@ -45,8 +56,8 @@ const Register =() =>{
                 title={'Registrar'}
                 content={
                     <form action="" className="fullwidth" onSubmit={handleSubmit}>
-                        <InputField id={'edName'} label={'Nome:'} onInput={(e) => handleChange(e)} />
-                        <InputField id={'edUserName'} label={'Nome de Usuario:'} onInput={(e) => handleChange(e)} />
+                        <InputField id={'edtName'} label={'Nome:'} onInput={(e) => handleChange(e)} />
+                        <InputField id={'edtUserName'} label={'Nome de Usuario:'} onInput={(e) => handleChange(e)} />
                         <InputField id={'edtEmail'} label={'E-mail:'} onInput={(e) => handleChange(e)} />
                         <InputField id={'edtPass'} label={'Senha:'} type={'password'} onInput={(e) => handleChange(e)} />
                         <div className="DivButtons marginbottom">
