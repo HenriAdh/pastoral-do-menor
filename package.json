@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "fastify": "^4.23.2",
-    "react-router-dom": "^6.16.0"
-  }
-}

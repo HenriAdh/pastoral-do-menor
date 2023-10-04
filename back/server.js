@@ -1,13 +1,21 @@
-import { fastify  } from "fastify";
+import fastify from "fastify";
 import { databasememory } from "./databaseTest.js";
+import fastifyCors from "@fastify/cors"
 
 const server = fastify();
 
 const database = new databasememory();
 
+server.register(fastifyCors, {
+    // Configuração do CORS
+    origin: '*',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type'],
+  });
+
 server.post('/register', (req, res) => {
-    const { name, username, email, pass, adm } = req.body;
-    database.create({
+    const { uid, name, username, email, pass, adm } = req.body;
+    const newUser = database.create(uid, {
         name,
         username,
         email,
@@ -15,7 +23,7 @@ server.post('/register', (req, res) => {
         adm,
     });
 
-    return res.status(201).send('Criado com sucesso!');
+    return res.status(201).send(newUser);
 })
 
 server.get('/login', (req, res) => {
@@ -24,7 +32,7 @@ server.get('/login', (req, res) => {
 
     console.log(users);
 
-    return users
+    return users;
 })
 
 server.put('/users/:id', (req, res) => {

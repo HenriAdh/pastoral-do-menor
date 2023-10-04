@@ -4,17 +4,12 @@ import { Link, useNavigate } from "react-router-dom";
 import Card from "../components/card";
 import InputField from "../components/input-field";
 import Button from "../components/button";
+import CheckBox from "../components/checkbox";
+import { callbackend } from "../hooks/fetch";
+import { signUp } from "../hooks/firebase"; 
 
 const Register =() =>{
-    const [formData, setFormData] = useState(
-        {
-            edtName: '', 
-            edtUserName: '', 
-            edtEmail: '', 
-            edtPass: '', 
-        }
-    );
-
+    const [formData, setFormData] = useState({});
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -34,19 +29,26 @@ const Register =() =>{
     }
 
     const createUser = async (arrayUser) => {
-        // const result = await fetch('http://localhost:3333/register/', {
-        //     method: 'POST',
-        //     headers: { 'Content-Type': 'application/json', 'Allow': 'POST, HEAD, OPTIONS'},
-        //     body: JSON.stringify({ 
-        //         name: arrayUser.edName,
-        //         username: arrayUser.edtUserName,
-        //         email: arrayUser.edtEmail,
-        //         pass: arrayUser.edtPass,
-        //         adm: true, })
-        //     }
-        // )
-        // return result.text();
-         return 'Usuario criado com sucesso'
+        const url = '/register';
+        const method = 'POST';
+        let obj = {
+            name: arrayUser.edName,
+            username: arrayUser.edtUserName,
+            email: arrayUser.edtEmail,
+            pass: arrayUser.edtPass,
+            adm: arrayUser.chkAdm === 'on',
+        }
+        try {
+            const newSignUp = signUp(arrayUser.email, arrayUser.pass);
+            if (newSignUp) {
+                obj = {...obj, uid : newSignUp.user.uid}
+                const result = await callbackend(url, method, obj);
+                return result.text();
+            }
+        } catch (err) {
+            console.log(err);
+            return err;
+        }
     }
 
     return (
@@ -60,6 +62,7 @@ const Register =() =>{
                         <InputField id={'edtUserName'} label={'Nome de Usuario:'} onInput={(e) => handleChange(e)} />
                         <InputField id={'edtEmail'} label={'E-mail:'} onInput={(e) => handleChange(e)} />
                         <InputField id={'edtPass'} label={'Senha:'} type={'password'} onInput={(e) => handleChange(e)} />
+                        <CheckBox id={'chkAdm'} label={' Administrador'} onChange={(e) => handleChange(e)} />
                         <div className="DivButtons marginbottom">
                             <Button id={'btnSignUp'} type="submit" text={'Confirmar'} />
                         </div>

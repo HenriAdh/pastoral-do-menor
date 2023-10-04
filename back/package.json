@@ -11,5 +11,9 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "@fastify/cors": "^8.4.0",
+    "fastify": "^4.23.2"
+  }
 }

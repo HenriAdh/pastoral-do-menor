@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import InputField from "../components/input-field";
 import Button from "../components/button";
 import Card from "../components/card";
+import { callbackend } from "../hooks/fetch";
 
 const LoginPage = () => {
     const [formData, setFormData] = useState({});
@@ -26,8 +27,17 @@ const LoginPage = () => {
     }
 
     const loginUser = async (arrayUser) => {
-        // chamar o back;
-        const isCorrect = arrayUser['edtEmail'] === 'emailteste@email.com' && arrayUser['edtPass'] === 'senhaTeste123';
+        const url = '/login?search=' + arrayUser.edtEmail;
+        const method = 'GET';
+        const result = await callbackend(url, method);
+
+        const user = result.json()
+
+        console.log(user);
+
+        const userteste = arrayUser['edtEmail'] === 'emailteste@email.com' && arrayUser['edtPass'] === 'senhaTeste123';
+        const isCorrect = user ? true : userteste;
+
         return isCorrect;
     } 
 

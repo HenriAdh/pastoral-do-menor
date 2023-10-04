@@ -16,17 +16,15 @@ export class databasememory {
             })
             .filter(user => {
                 if (search) {
-                    return user.name.includes(search);
+                    return user.email.includes(search);
                 }
-
                 return true;
             })
     }
 
-    create(user) {
-        const userId = randomUUID();
-
-        this.#users.set(userId, user);
+    create(uid, user) {
+        this.#users.set(uid, user);
+        return 'Criado com sucesso!';
     }
 
     update(id, user) {
