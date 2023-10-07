@@ -9,9 +9,8 @@ const firebaseConfig = {
     messagingSenderId: "236943488993",
     appId: "1:236943488993:web:9de0249ae6c3e7ef2084a0",
     measurementId: "G-JKKG2K809J"
-  };
+};
 
-// const firebaseConfig = process.env.FirebaseConfig;
 const firebaseApp = initializeApp(firebaseConfig)
 const auth = getAuth(firebaseApp);
 
@@ -35,6 +34,5 @@ export const signIn = async (email, pass) => {
 
 export const getUid = async () => {
     const user = auth.currentUser;
-     
     return user ? user.uid : false;
 }

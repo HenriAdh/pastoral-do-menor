@@ -3,12 +3,10 @@ import { Link, useNavigate } from "react-router-dom";
 import InputField from "../components/input-field";
 import Button from "../components/button";
 import Card from "../components/card";
-import { callbackend } from "../hooks/fetch";
 import { signIn } from "../hooks/firebase"; 
 
 const LoginPage = () => {
     const [formData, setFormData] = useState({});
-
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -18,43 +16,21 @@ const LoginPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try{
-            const result = await loginUser(formData)
-            result.length!==0 ? alert('Usuário logado com sucesso!') : alert('E-mail ou senha inválidos.');
-            if (result.length!==0) navigate('/home/relatorio/estoque');
-        } catch (err){
+            await loginUser(formData) ? navigate('/home/relatorio/estoque') : alert('E-mail ou senha inválidos');
+        } catch (err) {
             alert(err);
         }
     }
 
     const loginUser = async (arrayUser) => {
-        const user = await signIn(arrayUser.edtEmail, arrayUser.edtPass);
-
-        console.log(user.user.uid);
-
+        // Verifica se é o e-mail de teste
         const userteste = arrayUser['edtEmail'] === 'emailteste@email.com' && arrayUser['edtPass'] === 'senhaTeste123';
-        const isCorrect = user.length!==0 ? true : userteste;
-        
-        let userBack;
-        
-        if (isCorrect) {
-    
-            if (user.length!==0) {
-                const url = '/login?search=' + user.user.uid;
-                const method = 'GET';
-                const result = await callbackend(url, method);
-                userBack = await result.json()
-            } else {
-                userBack = {
-                    uid: "1",
-                    name: "Usuario de teste",
-                    username: "user.test",
-                    email: "user.test@email.com",
-                    adm: false
-                }
-            }
-        }
-
-        return userBack;
+        if (userteste) return true
+        // verifica se é um e-mail de verdade
+        const user = await signIn(arrayUser.edtEmail, arrayUser.edtPass);
+        if (user.length!==0) return true
+        // se não for nenhum retorna false
+        return false
     } 
 
     return (
