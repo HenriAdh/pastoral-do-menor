@@ -3,16 +3,16 @@ Content-Type: application/json
 Allow: POST
 
 {
+    "uid": "userteste",
     "name": "Henrique Adhmann Pires",
     "username": "henrique.pires",
     "email": "henrique.pires@gmail.com",
-    "pass": "123456",
     "adm": true
 }
 
 ###
 
-GET http://localhost:3333/login?search=henrique.pires@gmail.com
+GET http://localhost:3333/login?search=
 
 ###
 

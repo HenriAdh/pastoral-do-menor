@@ -30,20 +30,17 @@ server.get('/login', (req, res) => {
     const search = req.query.search;
     const users = database.list(search);
 
-    console.log(users);
-
     return users;
 })
 
 server.put('/users/:id', (req, res) => {
     const userId = req.params.id;
-    const { name, username, email, pass, adm } = req.body;
+    const { name, username, email, adm } = req.body;
 
     database.update(userId, {
         name,
         username,
         email,
-        pass,
         adm
     });
 

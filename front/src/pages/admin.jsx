@@ -1,22 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import css from './css/admin.module.css'
 import { useNavigate, Link } from "react-router-dom";
+import { callbackend } from "../hooks/fetch";
+import { getUid } from "../hooks/firebase";
 
 const Admin = () => {
+    const [adm, setAdm] = useState(false);
     const navigate = useNavigate();
     
-    const checkAdmin = () => {
-        const isAdmin = true;
-        if (isAdmin){
-            return console.log('admin')
-        } else {
-            return navigate('/home/relatorio/estoque');
-        }
-    }
-    
+    const verifyAdmin = async () => { 
+        let isAdmin;
+        const result = await getUid();
+        isAdmin = result ? await callbackend('login?search='+result, 'GET') : false;
+        console.log(isAdmin.adm);
+        return isAdmin.adm
+    };
     useEffect(() => {
-        checkAdmin();
-    });
+        setAdm(verifyAdmin)
+        adm ? console.log('admin') : navigate('/home/relatorio/estoque');
+    }, [navigate, adm]);
 
     return (
         <div className="center">
@@ -26,7 +28,7 @@ const Admin = () => {
                 <div className={css.list}>
                     <ul>
                         <li className={css.li}><Link className="link">Ver log de alterações</Link></li>
-                        <li className={css.li}><Link className="link" to={'/registrar'}>Novo usuário</Link></li>
+                        {adm?<li className={css.li}><Link className="link" to={'/registrar'}>Novo usuário</Link></li>:<></>}
                         <li className={css.li}><Link className="link">Excluir usuário</Link></li>
                         <li className={css.li}><Link className="link">Excluir imagens</Link></li>
                     </ul>

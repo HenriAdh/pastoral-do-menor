@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-//import css from './css/login.module.css';
 import { Link, useNavigate } from "react-router-dom";
 import InputField from "../components/input-field";
 import Button from "../components/button";
 import Card from "../components/card";
 import { callbackend } from "../hooks/fetch";
+import { signIn } from "../hooks/firebase"; 
 
 const LoginPage = () => {
     const [formData, setFormData] = useState({});
@@ -19,26 +19,42 @@ const LoginPage = () => {
         e.preventDefault();
         try{
             const result = await loginUser(formData)
-            result ? alert('Usuário logado com sucesso!') : alert('E-mail ou senha inválidos.');
-            if (result) navigate('/home/relatorio/estoque');
+            result.length!==0 ? alert('Usuário logado com sucesso!') : alert('E-mail ou senha inválidos.');
+            if (result.length!==0) navigate('/home/relatorio/estoque');
         } catch (err){
             alert(err);
         }
     }
 
     const loginUser = async (arrayUser) => {
-        const url = '/login?search=' + arrayUser.edtEmail;
-        const method = 'GET';
-        const result = await callbackend(url, method);
+        const user = await signIn(arrayUser.edtEmail, arrayUser.edtPass);
 
-        const user = result.json()
-
-        console.log(user);
+        console.log(user.user.uid);
 
         const userteste = arrayUser['edtEmail'] === 'emailteste@email.com' && arrayUser['edtPass'] === 'senhaTeste123';
-        const isCorrect = user ? true : userteste;
+        const isCorrect = user.length!==0 ? true : userteste;
+        
+        let userBack;
+        
+        if (isCorrect) {
+    
+            if (user.length!==0) {
+                const url = '/login?search=' + user.user.uid;
+                const method = 'GET';
+                const result = await callbackend(url, method);
+                userBack = await result.json()
+            } else {
+                userBack = {
+                    uid: "1",
+                    name: "Usuario de teste",
+                    username: "user.test",
+                    email: "user.test@email.com",
+                    adm: false
+                }
+            }
+        }
 
-        return isCorrect;
+        return userBack;
     } 
 
     return (

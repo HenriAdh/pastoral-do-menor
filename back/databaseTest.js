@@ -1,25 +1,24 @@
-import { randomUUID } from 'node:crypto'
-
 export class databasememory {
-    #users = new Map()
+    #users = new Map();
 
     list(search) {
         return Array.from(this.#users.entries())
-            .map((arrayUsers) => {
-                const id = arrayUsers[0]
-                const data = arrayUsers[1]
+        .map((arrayUsers) => {
+            const id = arrayUsers[0]
+            const data = arrayUsers[1]
 
-                return {
-                    id,
-                    ...data,
-                }
-            })
-            .filter(user => {
-                if (search) {
-                    return user.email.includes(search);
-                }
-                return true;
-            })
+            return {
+                id,
+                ...data,
+            }
+        })
+        .filter(user => {
+            if (search) {
+                const loadUser = user.id===search  ? user : false;
+                return loadUser;
+            }
+            return true;
+        })
     }
 
     create(uid, user) {

@@ -32,14 +32,14 @@ const Register =() =>{
         const url = '/register';
         const method = 'POST';
         let obj = {
-            name: arrayUser.edName,
+            name: arrayUser.edtName,
             username: arrayUser.edtUserName,
             email: arrayUser.edtEmail,
-            pass: arrayUser.edtPass,
             adm: arrayUser.chkAdm === 'on',
         }
         try {
-            const newSignUp = signUp(arrayUser.email, arrayUser.pass);
+            console.log(arrayUser);
+            const newSignUp = await signUp(arrayUser.edtEmail, arrayUser.edtPass);
             if (newSignUp) {
                 obj = {...obj, uid : newSignUp.user.uid}
                 const result = await callbackend(url, method, obj);
