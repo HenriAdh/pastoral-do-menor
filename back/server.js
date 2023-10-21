@@ -1,10 +1,12 @@
 import fastify from "fastify";
 import { databasememory } from "./databaseTest.js";
+import { databaseStock } from "./db/dbStock.js";
 import fastifyCors from "@fastify/cors"
 
 const server = fastify();
 
-const database = new databasememory();
+const dbUser = new databasememory();
+const dbStock = new databaseStock();
 
 server.register(fastifyCors, {
     // Configuração do CORS
@@ -15,7 +17,7 @@ server.register(fastifyCors, {
 
 server.post('/register', (req, res) => {
     const { uid, name, username, email, pass, adm } = req.body;
-    const newUser = database.create(uid, {
+    const newUser = dbUser.create(uid, {
         name,
         username,
         email,
@@ -28,7 +30,7 @@ server.post('/register', (req, res) => {
 
 server.get('/login', (req, res) => {
     const search = req.query.search;
-    const users = database.list(search);
+    const users = dbUser.list(search);
 
     return users;
 })
@@ -37,7 +39,7 @@ server.put('/users/:id', (req, res) => {
     const userId = req.params.id;
     const { name, username, email, adm } = req.body;
 
-    database.update(userId, {
+    dbUser.update(userId, {
         name,
         username,
         email,
@@ -50,9 +52,61 @@ server.put('/users/:id', (req, res) => {
 server.delete('/users/:id', (req, res) => {
     const userId = req.params.id;
 
-    database.delete(userId)
+    dbUser.delete(userId)
 
     return res.status(204).send('Deletado com sucesso!');
+})
+
+server.post('/newItem', (req, res) => {
+    const date = new Date();
+    const newId = dbStock.listIds();
+    let id = 0;
+    if (newId) newId.forEach(element => {
+        if (element.id > id) id = element.id;
+    });
+    id++;
+    id = `${id}`;
+    const { category, material, uni, amount, description, location } = req.body;
+    const newItem = dbStock.create(id, {
+        category,
+        material,
+        uni,
+        amount,
+        description,
+        location,
+        'dtReg' : date,
+        "active": 1,
+    });
+
+    return res.status(201).send(newItem);
+})
+
+server.get('/getItens', (req, res) => {
+    const search = req.query.search;
+    const param = req.query.param;
+    const active = req.query.active;
+    const itensList = dbStock.list(search, param, active);
+
+    return itensList;
+})
+
+server.put('/itens/:id', (req, res) => {
+    const itemId = req.params.id;
+    const { amount } = req.body;
+
+    dbStock.update(itemId, amount);
+
+    return res.status(204).send('Estoque atualizado.');
+})
+
+server.delete('/itens/:id', (req, res) => {
+    const itemId = req.params.id;
+
+    dbStock.update(itemId, {
+        "active": 0,
+    });
+
+    return res.status(204).send('Deletado com sucesso.');
 })
 
 server.listen({

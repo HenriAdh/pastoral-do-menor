@@ -1,36 +1,54 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { callbackend } from "../../../hooks/fetch";
 
 import Table from "../../../components/table";
 
 const Stock = () => {
-    const data = [
+    const [data, setData] = useState([]);
+
+    useEffect(() => {
+        const fetchDataTable = async () => {
+            const url = '/getItens?active=1';
+            const method = 'GET'
+            const result = await callbackend(url, method)
+
+            const prevData = [
+                await result.map((item)=>{
+                    return {
+                        'ID': item.id,
+                        'Material': item.material,
+                        'Descrição': item.description,
+                        'Unid': item.uni,
+                        'Qtde': item.amount,
+                        'Categoria': item.category,
+                        'Localização': item.location,
+                    }
+                })
+            ]
+            setData(prevData);
+        }
+
+        fetchDataTable();
+    }, []);
+
+    const dataTeste = [
         {
-            ID: '52',
-            DESCRICAO: <span className="hcenter center gap5"><img className="img" src="../../logo192.png" alt="img52" height={'40px'} /> React App 1</span>,
-            UNID: 'UN',
-            QTDE: '2',
-            CATEGORIA: 'Programacao',
-        },
-        {
-            ID: '71',
-            DESCRICAO: <span className="hcenter center gap5"><img className="img" src="../../logo192.png" alt="img52" height={'40px'} /> React App 2</span>,
-            UNID: 'PCT',
-            QTDE: '5',
-            CATEGORIA: 'Programacao',
-        }, 
-        {
-            ID: '97',
-            DESCRICAO: <span className="hcenter center gap5"><img className="img" src="../../logo192.png" alt="img52" height={'40px'} /> React App 3</span>,
-            UNID: 'KG',
-            QTDE: '1',
-            CATEGORIA: 'Programacao',
-        },
-    ]
+            'ID': '1',
+            'Material': 'Arroz',
+            'Descrição': 'Pacote de arroz camil',
+            'Unid': 'PCT',
+            'Qtde': '15',
+            'Categoria': 'Alimento',
+            'Localização': 'D-32',
+        }
+    ];
+
+    console.log(data);
 
     return(
         <div className="horizontalscroll">
             <Table 
-                dataTable={data}
+                dataTable={data ? data : dataTeste}
             />
         </div>
     )

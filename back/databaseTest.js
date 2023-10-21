@@ -23,7 +23,7 @@ export class databasememory {
 
     create(uid, user) {
         this.#users.set(uid, user);
-        return 'Criado com sucesso!';
+        return 'Criado com sucesso.';
     }
 
     update(id, user) {

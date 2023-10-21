@@ -6,11 +6,8 @@ import Error404 from "./pages/notFoundPage";
 import RecoveryPage from "./pages/recoveryPass";
 import HomePage from "./pages/homePage";
 import NewEntry from "./pages/subPages/new-entry";
-import NewExit from "./pages/subPages/new-exit";
 import Report from "./pages/subPages/report";
 import Stock from "./pages/subPages/reports/stock";
-import OpenRequests from "./pages/subPages/reports/openRequests";
-import ClosedRequests from "./pages/subPages/reports/closedRequests";
 import Admin from "./pages/admin";
 
 const Routers = () => {
@@ -55,24 +52,12 @@ const Routers = () => {
                         element={<NewEntry />}
                     />
                     <Route
-                        path="nova-saida"
-                        element={<NewExit />}
-                    />
-                    <Route
                         path="relatorio"
                         element={<Report />}
                     >
                         <Route
                             path="estoque" 
                             element={<Stock />}
-                        />,
-                        <Route
-                            path="solicitacoes-abertas" 
-                            element={<OpenRequests />}
-                        />,
-                        <Route
-                            path="solicitacoes-fechadas" 
-                            element={<ClosedRequests />}
                         />,
                     </Route>
                 </Route>
