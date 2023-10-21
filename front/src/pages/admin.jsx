@@ -12,12 +12,13 @@ const Admin = () => {
         let isAdmin;
         const result = await getUid();
         isAdmin = result ? await callbackend('login?search='+result, 'GET') : false;
-        console.log(isAdmin.adm);
         return isAdmin.adm
     };
     useEffect(() => {
+
+
         setAdm(verifyAdmin)
-        adm ? console.log('admin') : navigate('/home/relatorio/estoque');
+        adm ? console.log('') : navigate('/home/relatorio/estoque');
     }, [navigate, adm]);
 
     return (

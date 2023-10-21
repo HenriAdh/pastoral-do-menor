@@ -10,21 +10,21 @@ const Stock = () => {
         const fetchDataTable = async () => {
             const url = '/getItens?active=1';
             const method = 'GET'
-            const result = await callbackend(url, method)
+            const result = await callbackend(url, method);
+            const dbData = await result.json();
 
-            const prevData = [
-                await result.map((item)=>{
-                    return {
-                        'ID': item.id,
-                        'Material': item.material,
-                        'Descrição': item.description,
-                        'Unid': item.uni,
-                        'Qtde': item.amount,
-                        'Categoria': item.category,
-                        'Localização': item.location,
-                    }
-                })
-            ]
+            const prevData = dbData.map((item)=>{
+                return {
+                    'ID': item.id,
+                    'Material': item.material,
+                    'Descrição': item.description,
+                    'Unid': item.uni,
+                    'Qtde': item.amount,
+                    'Categoria': item.category,
+                    'Localização': item.location,
+                }
+            });
+            
             setData(prevData);
         }
 
@@ -43,12 +43,11 @@ const Stock = () => {
         }
     ];
 
-    console.log(data);
-
     return(
         <div className="horizontalscroll">
             <Table 
-                dataTable={data ? data : dataTeste}
+                dataTable={data.length > 0 ? data : dataTeste}
+                focus={"Descrição"}
             />
         </div>
     )

@@ -38,7 +38,6 @@ const Register =() =>{
             adm: arrayUser.chkAdm === 'on',
         }
         try {
-            console.log(arrayUser);
             const newSignUp = await signUp(arrayUser.edtEmail, arrayUser.edtPass);
             if (newSignUp) {
                 obj = {...obj, uid : newSignUp.user.uid}
@@ -46,7 +45,6 @@ const Register =() =>{
                 return result.text();
             }
         } catch (err) {
-            console.log(err);
             return err;
         }
     }

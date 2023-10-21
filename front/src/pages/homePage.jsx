@@ -20,9 +20,7 @@ const HomePage = () => {
                 <div className="DivBox">
                     <Link to='nova-entrada' className="margin button link">Nova Entrada</Link>
                     <span> | </span>
-                    <Link to='nova-saida' className="margin button link">Nova saida</Link>
-                    <span> | </span>
-                    <Link to='relatorio/estoque' className="margin button link">relatorio</Link>
+                    <Link to='relatorio/estoque' className="margin button link">Relatório</Link>
                 </div>
                 <div className="DivBox">
                     <Suspense fallback={<h1>Carregando...</h1>} >

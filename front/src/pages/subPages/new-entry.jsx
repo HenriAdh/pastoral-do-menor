@@ -34,7 +34,7 @@ const NewEntry = () => {
 
     return(
         <div>
-            <h1>Nova entrada</h1>
+            <h2>Nova entrada</h2>
             <form action={""} className={css.form} onSubmit={handleSubmit}>
                 <div className={css.inputs}>               
                     <InputField
@@ -45,7 +45,7 @@ const NewEntry = () => {
                     />
                     <InputField
                         id={'edtMaterial'}
-                        label={'Material'}
+                        label={'Nome'}
                         onInput={(e) => handleChange(e)}
                         required={true}
                     />
@@ -69,7 +69,7 @@ const NewEntry = () => {
                     />
                     <InputField
                         id={'edtLocation'}
-                        label={'Origem'}
+                        label={'Localização'}
                         onInput={(e) => handleChange(e)}
                         required={true}
                     />
