@@ -1,0 +1,15 @@
+.btnExit {
+    background-color: #FFF;
+    border: none;
+    font-size: x-large;
+}
+
+.btnExit:hover {
+    cursor: pointer;
+}
+
+.formModal {
+    display: flex;
+    flex-direction: column;
+    gap: 10px
+}

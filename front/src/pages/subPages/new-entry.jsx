@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import css from './css/newEntry.module.css';
 import InputField from "../../components/input-field";
 import Button from '../../components/button';
-import { callbackend } from "../../hooks/fetch";
+import { insertStock } from "../../hooks/firebase"; 
+import Loader from "../../components/loader";
 
 const NewEntry = () => {
-    const [entry, setEntry] = useState({})
+    const [entry, setEntry] = useState({});
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (e) => {
         setEntry({
@@ -16,6 +18,7 @@ const NewEntry = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         const obj = {
             category    : entry['edtCategory'],
             material    : entry['edtMaterial'],
@@ -24,12 +27,23 @@ const NewEntry = () => {
             description : entry['edtDescription'],
             location    : entry['edtLocation'],
         };
-        const url = '/newItem';
-        const method = 'POST';
-        const result = await callbackend(url, method, obj);
-        const text = await result.text();
-        
-        alert(text);
+        reset();
+        try {
+            await insertStock(obj);
+            setLoading(false);
+        } catch (e) {
+            console.log(e)
+            setLoading(false);
+        };
+    }
+
+    const reset = () => {
+        document.getElementById('edtCategory').value = '';
+        document.getElementById('edtMaterial').value = '';
+        document.getElementById('edtUnits').value = '';
+        document.getElementById('edtAmount').value = '';
+        document.getElementById('edtDescription').value = '';
+        document.getElementById('edtLocation').value = '';
     }
 
     return(
@@ -79,6 +93,7 @@ const NewEntry = () => {
                     type={"submit"}
                     text={'Enviar'}
                 />
+                {loading && <Loader />}
             </form>
         </div>
     )
