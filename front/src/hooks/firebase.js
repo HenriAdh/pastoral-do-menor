@@ -9,7 +9,7 @@ import {
     updateDoc,
     deleteDoc,
 } from "firebase/firestore";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth"
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
 
 const firebaseConfig = {
     apiKey: "AIzaSyAHnjY9qj70_qy4ZekKgP4rpMRjLLGYelE",
@@ -44,6 +44,14 @@ export const signIn = async (email, pass) => {
         return result;
     } catch (err) {
         return err;
+    }
+}
+
+export const logOutUser = () => {
+    try {
+        signOut(auth);
+    } catch {
+        alert('Erro ao desconectar.');
     }
 }
 

@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import css from './css/homePage.module.css';
 import { Outlet } from "react-router";
 import { Link, useNavigate } from "react-router-dom";
+import { logOutUser } from "../hooks/firebase";
 
 const HomePage = () => {
     const navigate = useNavigate();
@@ -10,6 +11,10 @@ const HomePage = () => {
     }
     
     const isAdmin = checkAdmin();
+    const logOut = () => {
+        logOutUser();
+    }
+
     return(
         <div className="center">
             <div className={css.homePage}>
@@ -28,7 +33,7 @@ const HomePage = () => {
                     </Suspense>
                 </div>
                 <div className="nomarginleft fullwidth center">
-                    <footer><Link to={'/'} className="link">voltar</Link></footer>
+                    <footer onClick={()=>logOut()}><Link to={'/'} className="link">Desconectar</Link></footer>
                 </div>
             </div>
         </div>
