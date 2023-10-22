@@ -21,46 +21,46 @@ const Routers = () => {
                     }
                     errorElement={<Error404 />}
                 />
-                <Route
-                    path='/hangarekamaori'
-                    element={
-                        <Admin/>
-                    }
-                    errorElement={<Error404 />}
-                />
-                <Route
-                    path='/registrar'
-                    element={
-                        <Register />
-                    }
-                    errorElement={<Error404 />}
-                />
-                <Route
-                    path="/restaurar-senha"
-                    element={
-                        <RecoveryPage />
-                    }
-                    errorElement={<Error404 />}
-                />
-                <Route 
-                    path="/home"
-                    element={<HomePage />}
-                    errorElement={<Error404 />}
-                >
                     <Route
-                        path="nova-entrada"
-                        element={<NewEntry />}
+                        path='/hangarekamaori'
+                        element={
+                            <Admin/>
+                        }
+                        errorElement={<Error404 />}
                     />
                     <Route
-                        path="relatorio"
-                        element={<Report />}
+                        path='/registrar'
+                        element={
+                            <Register />
+                        }
+                        errorElement={<Error404 />}
+                    />
+                    <Route
+                        path="/restaurar-senha"
+                        element={
+                            <RecoveryPage />
+                        }
+                        errorElement={<Error404 />}
+                    />
+                    <Route 
+                        path="/home"
+                        element={<HomePage />}
+                        errorElement={<Error404 />}
                     >
                         <Route
-                            path="estoque" 
-                            element={<Stock />}
-                        />,
+                            path="nova-entrada"
+                            element={<NewEntry />}
+                        />
+                        <Route
+                            path="relatorio"
+                            element={<Report />}
+                        >
+                            <Route
+                                path="estoque" 
+                                element={<Stock />}
+                            />,
+                        </Route>
                     </Route>
-                </Route>
             </Routes>
         </Router>
     )

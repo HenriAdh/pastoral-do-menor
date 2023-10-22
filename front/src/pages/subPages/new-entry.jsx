@@ -29,7 +29,8 @@ const NewEntry = () => {
         };
         reset();
         try {
-            await insertStock(obj);
+            const result = await insertStock(obj);
+            alert(result);
             setLoading(false);
         } catch (e) {
             console.log(e)

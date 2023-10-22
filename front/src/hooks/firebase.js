@@ -29,6 +29,7 @@ const stock = collection(db, "stock");
 //const users = collection(db, 'users');
 
 export const signUp = async (email, pass) => {
+    if (!getUid) return 'Usuário não permitido.';
     try {
         const result = await createUserWithEmailAndPassword(auth, email, pass);
         return result;
@@ -48,12 +49,13 @@ export const signIn = async (email, pass) => {
 
 export const getUid = async () => {
     const user = auth.currentUser;
-    return user ? user.uid : false;
+    return user ? true : false;
 }
 
 export const insertStock = async (obj) => {
-    const inserted = await addDoc(stock, obj);
-    return inserted;
+    if (!(await getUid())) return 'Usuário não permitido.';
+    await addDoc(stock, obj);
+    return 'Item adicionado.';
 }
 
 export const selectItemStock = async (id) => {
@@ -68,13 +70,15 @@ export const selectAllStock = async () => {
 }
 
 export const updateStock = async (id, obj) => {
+    if (!(await getUid())) return 'Usuário não permitido.';
     const docItem = doc(db, 'stock', id);
-    const updated = await updateDoc(docItem, obj)
-    return updated;
+    await updateDoc(docItem, obj)
+    return 'Quantidade atualizada.';
 }
 
 export const deleteStock = async (id) => {
+    if (!(await getUid())) return 'Usuário não permitido.';
     const docItem = doc(db, 'stock', id);
-    const deleted = await deleteDoc(docItem)
-    return deleted;
+    await deleteDoc(docItem)
+    return 'Item removido.';
 }

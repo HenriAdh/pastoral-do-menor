@@ -12,8 +12,8 @@ const ModalStock = ({id, oldAmount=0, onFinish}) => {
     const saveNewAmount = async () => {
         setLoading(true);
         try {
-            await updateStock(id, {amount: amount})
-            alert('Quantidade atualizada');
+            const result = await updateStock(id, {amount: amount})
+            alert(result);
             setLoading(false);
             onFinish();
         } catch (e) {
@@ -27,13 +27,13 @@ const ModalStock = ({id, oldAmount=0, onFinish}) => {
     const deleteItem = async () => {
         setLoading(true);
         try {
-            await deleteStock(id);
-            alert('Item removido.')
+            const result = await deleteStock(id);
+            alert(result);
             setLoading(false);
             onFinish();
         } catch (e) {
             console.log(e);
-            alert('Erro ao deletar item.');
+            alert('Erro ao remover item.');
             setLoading(false);
             onFinish();
         }
@@ -75,7 +75,7 @@ const ModalStock = ({id, oldAmount=0, onFinish}) => {
                 type="button"
                 id="btnDelete"
                 onClick={() => deleteItem()}
-                value={'Deletar'} 
+                value={'Remover'} 
                 style={{
                     backgroundColor: '#F00',
                     borderRadius: '5px',
