@@ -4,9 +4,11 @@ import InputField from "../components/input-field";
 import Button from "../components/button";
 import Card from "../components/card";
 import { signIn } from "../hooks/firebase"; 
+import Loader from "../components/loader";
 
 const LoginPage = () => {
     const [formData, setFormData] = useState({});
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -15,10 +17,13 @@ const LoginPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         try{
             await loginUser(formData) ? navigate('/home/relatorio/estoque') : alert('E-mail ou senha inválidos');
+            setLoading(false);
         } catch (err) {
             alert(err);
+            setLoading(false);
         }
     }
 
@@ -62,6 +67,7 @@ const LoginPage = () => {
                     </form>
                 }
             />
+            {loading && <Loader />}
         </div>
     )
 }

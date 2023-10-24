@@ -7,9 +7,11 @@ import Button from "../components/button";
 import CheckBox from "../components/checkbox";
 import { callbackend } from "../hooks/fetch";
 import { signUp } from "../hooks/firebase"; 
+import Loader from "../components/loader";
 
 const Register =() =>{
     const [formData, setFormData] = useState({});
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleChange = (e) => {
@@ -18,13 +20,16 @@ const Register =() =>{
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true)
         try{
             const result = await createUser(formData);
             alert(result);
+            setLoading(false);
             navigate('/');
         }
         catch(err){
             alert(err)
+            setLoading(false);
         }
     }
 
@@ -68,6 +73,7 @@ const Register =() =>{
                     </form>
                 }
             />
+            {loading && <Loader />}
         </div>
     );
 
