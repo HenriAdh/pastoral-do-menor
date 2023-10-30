@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 //import css from './css/register.module.css'
 import { Link, useNavigate } from "react-router-dom";
 import Card from "../components/card";
@@ -6,13 +6,20 @@ import InputField from "../components/input-field";
 import Button from "../components/button";
 import CheckBox from "../components/checkbox";
 import { callbackend } from "../hooks/fetch";
-import { signUp } from "../hooks/firebase"; 
+import { getUid, signUp } from "../hooks/firebase"; 
 import Loader from "../components/loader";
 
 const Register =() =>{
     const [formData, setFormData] = useState({});
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
+
+    const checkAuth = useCallback(async () => {
+        const user = await getUid();
+        if(!(user)) return navigate('/');
+    }, [navigate]);
+
+    useEffect(() => {checkAuth()}, [checkAuth]);
 
     const handleChange = (e) => {
         setFormData({...formData, [e.target.name]: e.target.value})

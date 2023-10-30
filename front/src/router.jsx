@@ -21,46 +21,76 @@ const Routers = () => {
                     }
                     errorElement={<Error404 />}
                 />
+
+                <Route
+                    path='/hangarekamaori'
+                    element={
+                        <Admin/>
+                    }
+                    errorElement={<Error404 />}
+                />
+
+                <Route
+                    path='/registrar'
+                    element={
+                        <Register />
+                    }
+                    errorElement={<Error404 />}
+                />
+
+                <Route
+                    path="/restaurar-senha"
+                    element={
+                        <RecoveryPage />
+                    }
+                    errorElement={<Error404 />}
+                />
+
+                <Route 
+                    path="/home"
+                    element={<HomePage />}
+                    errorElement={<Error404 />}
+                >
                     <Route
-                        path='/hangarekamaori'
-                        element={
-                            <Admin/>
-                        }
-                        errorElement={<Error404 />}
+                        path="novo-item"
+                        element={<NewEntry />}
                     />
+
                     <Route
-                        path='/registrar'
-                        element={
-                            <Register />
-                        }
-                        errorElement={<Error404 />}
+                        path="itens"
+                        element={<NewEntry />}
                     />
+
                     <Route
-                        path="/restaurar-senha"
-                        element={
-                            <RecoveryPage />
-                        }
-                        errorElement={<Error404 />}
+                        path="novo-pedido"
+                        element={<NewEntry />}
                     />
-                    <Route 
-                        path="/home"
-                        element={<HomePage />}
-                        errorElement={<Error404 />}
+
+                    <Route
+                        path="pedidos"
+                        element={<NewEntry />}
+                    />
+
+                    <Route
+                        path="relatorios"
+                        element={<Report />}
                     >
                         <Route
-                            path="nova-entrada"
-                            element={<NewEntry />}
+                            path="estoque" 
+                            element={<Stock />}
                         />
                         <Route
-                            path="relatorio"
-                            element={<Report />}
-                        >
-                            <Route
-                                path="estoque" 
-                                element={<Stock />}
-                            />,
-                        </Route>
+                            path="pedidos" 
+                            element={<Stock />}
+                        />
                     </Route>
+                </Route>
+                <Route 
+                    path="*"
+                    element={
+                        <LoginPage />
+                    }
+                />
             </Routes>
         </Router>
     )

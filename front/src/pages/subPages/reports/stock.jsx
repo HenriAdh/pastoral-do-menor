@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { selectAllStock, updateStock, deleteStock } from "../../../hooks/firebase";
+import React, { useState, useEffect, useCallback } from "react";
+import { selectAllStock, updateStock, deleteStock, getUid } from "../../../hooks/firebase";
 import Table from "../../../components/table";
 import Loader from "../../../components/loader";
 import Modal from "../../../components/modal";
 import styles from './stock.module.css';
+import { useNavigate } from "react-router-dom";
 
 const ModalStock = ({id, oldAmount=0, onFinish}) => {
     const [amount, setAmount] = useState(oldAmount);
@@ -93,35 +94,45 @@ const Stock = () => {
     const [data, setData] = useState([]);
     const [item, setItem] = useState({id: '',});
 
-    useEffect(() => {
-        const fetchDataTable = async () => {
-            const dbData = await selectAllStock();
-            const itens = dbData.docs.map((doc) =>({ ...doc.data(), id: doc.id }))
-            const prevData = itens.map((item) => {
-                return {
-                    'Nome': item.material,
-                    'Descrição': item.description,
-                    'Unid': item.uni,
-                    'Qtde': item.amount,
-                    'Categoria': item.category,
-                    'Localização': item.location,
-                    'Ação': <input
-                        id={'btnExtract'}
-                        type="button"
-                        value={'Retirar'} 
-                        onClick={() => setItem({id: item.id, oldValue: item.amount})} 
-                        style={{
-                            backgroundColor: '#FFF',
-                            borderRadius: '5px',
-                        }} 
-                    />,
-                }
-            });
+    const navigate = useNavigate();
 
-            setData(prevData);
-        }
+    const checkAuth = useCallback(async () => {
+        const user = await getUid();
+        if(!(user)) return navigate('/');
+    }, [navigate])
+
+    const fetchDataTable = useCallback( async () => {
+        const dbData = await selectAllStock();
+        const itens = dbData.docs.map((doc) =>({ ...doc.data(), id: doc.id }))
+        const prevData = itens.map((item) => {
+            return {
+                'Nome': item.material,
+                'Descrição': item.description,
+                'Unid': item.uni,
+                'Qtde': item.amount,
+                'Categoria': item.category,
+                'Localização': item.location,
+                'Ação': <input
+                    id={'btnExtract'}
+                    type="button"
+                    value={'Alterar'} 
+                    onClick={() => setItem({id: item.id, oldValue: item.amount})} 
+                    style={{
+                        backgroundColor: '#FFF',
+                        borderRadius: '5px',
+                    }} 
+                />,
+            }
+        });
+
+        setData(prevData);
+    }, [])
+
+    useEffect(() => {
+        checkAuth();
         fetchDataTable();
-    }, []);
+        // eslint-disable-next-line
+    }, [checkAuth, fetchDataTable]);
 
     return(
         <div className="horizontalscroll">

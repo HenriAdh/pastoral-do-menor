@@ -154,11 +154,19 @@ export const insertRequisicao = async (obj) => {
     if (!(user)) return 'Usuário não permitido.';
     try {
         const newObj = {
-            ...obj,
+            origin: obj.origin,
+            motivo: obj.motivo,
+            status: 'Aberta',
             dtRequisicao: date.toLocaleString(),
             user: user.uid,
         }
-        await addDoc(requisicoes, newObj);
+        const req = await addDoc(requisicoes, newObj);
+        obj.itens.forEach(async item => {
+            await addDoc(itensRequisitados, {
+                ...item,
+                idRequisicao: req.id,
+            })
+        });
         return 'Requisicao adicionada.';
     } catch (e) {
         console.log(e);
@@ -178,10 +186,23 @@ export const updateRequisicao = async (id, obj) => {
             idRequisicao: id,
             idUser: user.uid,
         }
-        await addDoc(logStock, log);
+        await addDoc(logRequisicoes, log);
+        await addDoc(itensRequisitados, )
         return 'Requisicao atendida.';
     } catch (e) {
         console.log(e);
         return 'Erro ao atender requisicao.';
     }
+}
+
+export const selectRequisicoes = async (where) => {
+    const itens = await getDocs(stock);
+    if (where) itens.filter((item) => item.status === where)
+    return itens;
+}
+
+export const selectItensReq = async (idReq) => {
+    const itens = await getDocs(itensRequisitados);
+    itens.filter((item)=>item.idRequisicao === idReq);
+    return itens
 }

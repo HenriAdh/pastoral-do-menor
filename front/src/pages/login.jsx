@@ -19,7 +19,7 @@ const LoginPage = () => {
         e.preventDefault();
         setLoading(true);
         try{
-            await loginUser(formData) ? navigate('/home/relatorio/estoque') : alert('E-mail ou senha inválidos');
+            await loginUser(formData) ? navigate('/home/relatorios/estoque') : alert('E-mail ou senha inválidos');
             setLoading(false);
         } catch (err) {
             alert(err);
@@ -36,7 +36,7 @@ const LoginPage = () => {
         if (user.length!==0) return true
         // se não for nenhum retorna false
         return false
-    } 
+    }
 
     return (
         <div className="DivPrinc center">

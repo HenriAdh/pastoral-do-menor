@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import css from './css/admin.module.css'
 import { useNavigate, Link } from "react-router-dom";
 import { callbackend } from "../hooks/fetch";
@@ -6,7 +6,14 @@ import { getUid } from "../hooks/firebase";
 
 const Admin = () => {
     const [adm, setAdm] = useState(false);
+
     const navigate = useNavigate();
+
+    const checkAuth = useCallback(async () => {
+        const user = await getUid();
+        if(!(user)) return navigate('/');
+    }, [navigate])
+    useEffect(() => {checkAuth()}, [checkAuth]);
     
     const verifyAdmin = async () => { 
         let isAdmin;
@@ -15,8 +22,6 @@ const Admin = () => {
         return isAdmin.adm
     };
     useEffect(() => {
-
-
         setAdm(verifyAdmin)
         adm ? console.log('') : navigate('/home/relatorio/estoque');
     }, [navigate, adm]);

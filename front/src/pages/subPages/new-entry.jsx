@@ -1,13 +1,22 @@
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import css from './css/newEntry.module.css';
 import InputField from "../../components/input-field";
 import Button from '../../components/button';
-import { insertStock } from "../../hooks/firebase"; 
+import { getUid, insertStock } from "../../hooks/firebase"; 
 import Loader from "../../components/loader";
+import { useNavigate } from "react-router-dom";
 
 const NewEntry = () => {
     const [entry, setEntry] = useState({});
     const [loading, setLoading] = useState(false);
+
+    const navigate = useNavigate();
+
+    const checkAuth = useCallback(async () => {
+        const user = await getUid();
+        if(!(user)) return navigate('/');
+    }, [navigate])
+    useEffect(() => {checkAuth()}, [checkAuth]);
 
     const handleChange = (e) => {
         setEntry({
