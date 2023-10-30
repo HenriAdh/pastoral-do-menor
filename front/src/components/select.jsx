@@ -19,7 +19,7 @@ const Select = ({ id, preselect, options, onChange=()=>{}, required=false }) => 
                 >
                     {preselect}
                 </option>
-                {options.map((opt, index) => (
+                {options.length > 0 ? options.map((opt, index) => (
                     <option 
                         key={index} 
                         value={opt['value']} 
@@ -27,7 +27,7 @@ const Select = ({ id, preselect, options, onChange=()=>{}, required=false }) => 
                     >
                         {opt['desc']}
                     </option>
-                ))}
+                )): <></>}
             </select>
         </div>
     )

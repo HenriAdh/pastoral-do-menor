@@ -23,15 +23,15 @@ const HomePage = () => {
                     <span>Controle de estoque - Pastoral do Menor</span>
                 </div>
                 <div className="DivBox">
-                    <Link to='nova-entrada' className="margin button link">Novo item</Link>
+                    <Link to='novo-item' className="margin button link">Novo item</Link>
                     <span> | </span>
-                    <Link to='relatorio/estoque' className="margin button link">Itens</Link>
+                    <Link to='itens' className="margin button link">Itens</Link>
                     <span> | </span>
-                    <Link to='relatorio/estoque' className="margin button link">Novo pedido</Link>
+                    <Link to='novo-pedido' className="margin button link">Novo pedido</Link>
                     <span> | </span>
-                    <Link to='relatorio/estoque' className="margin button link">Pedidos</Link>
+                    <Link to='pedidos' className="margin button link">Pedidos</Link>
                     <span> | </span>
-                    <Link to='relatorio/estoque' className="margin button link">Relatórios</Link>
+                    <Link to='relatorios/estoque' className="margin button link">Relatórios</Link>
                 </div>
                 <div className="DivBox">
                     <Suspense fallback={<h1>Carregando...</h1>} >

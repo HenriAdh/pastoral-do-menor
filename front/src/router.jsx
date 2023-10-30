@@ -9,6 +9,10 @@ import NewEntry from "./pages/subPages/new-entry";
 import Report from "./pages/subPages/report";
 import Stock from "./pages/subPages/reports/stock";
 import Admin from "./pages/admin";
+import ViewItens from "./pages/subPages/view-item";
+import NewRequest from "./pages/subPages/new-Request";
+import ViewRequest from "./pages/subPages/view-requests";
+import RequestReport from "./pages/subPages/reports/request";
 
 const Routers = () => {
     return (
@@ -58,17 +62,17 @@ const Routers = () => {
 
                     <Route
                         path="itens"
-                        element={<NewEntry />}
+                        element={<ViewItens />}
                     />
 
                     <Route
                         path="novo-pedido"
-                        element={<NewEntry />}
+                        element={<NewRequest />}
                     />
 
                     <Route
                         path="pedidos"
-                        element={<NewEntry />}
+                        element={<ViewRequest />}
                     />
 
                     <Route
@@ -81,7 +85,7 @@ const Routers = () => {
                         />
                         <Route
                             path="pedidos" 
-                            element={<Stock />}
+                            element={<RequestReport />}
                         />
                     </Route>
                 </Route>
