@@ -6,10 +6,39 @@ import Select from "../../components/select";
 import { insertRequisicao, selectAllStock } from "../../hooks/firebase";
 import css from './css/newEntry.module.css';
 
+const Inputs = ({qtd, onchange, options}) => {
+    const elements = [];
+    for (let index = 0; index < qtd; index++) {
+        elements.push(<div key={index}>
+            <Select
+                id={'cbxItem'+index}
+                preselect={'Item'}
+                onChange={(e) => onchange(e)}
+                required={true}
+                options={options}
+            />
+            <InputField
+                id={'edtQtd'+index}
+                type={"number"}
+                label={'Quantidade'}
+                onInput={(e)=>onchange(e)}
+                required={true}
+                min={1}
+            />
+            <hr />
+        </div>)
+    }
+    return (
+        elements.map((item) => item)
+    )
+}
+
 const NewRequest = () => {
     const [dataSelect, setDataSelect] = useState([]);
     const [formData, setFormData] = useState({});
     const [loading, setLoading] = useState(false);
+    const [page, setPage] = useState(0);
+    const [amountItens, setAmountItens] = useState(1);
 
     const fetchData = useCallback(async () => {
         const dbData = await selectAllStock();
@@ -32,45 +61,84 @@ const NewRequest = () => {
         })
     }
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         setLoading(true);
-        insertRequisicao()
+        const itens = [];
+        for (let index = 0; index < amountItens; index++) {
+            itens.push({
+                idItem: formData[`cbxItem${index}`],
+                qtd: formData[`edtQtd${index}`]
+            })            
+        }
+        const newObj = {
+            motivo: formData.edtMotivo,
+            itens
+        }
+        const result = await insertRequisicao(newObj);
+        alert(result);
+        setLoading(false);
     }
 
     return(
-        <div>
+        <div style={{width: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center'}}>
             <h2>Nova requisição</h2>
-            {}
-            <form action={""} className={css.form} onSubmit={handleSubmit}>
-                <div className={css.inputs}>
-                    <Select
-                        id={'cbxItem'}
-                        preselect={'Item'}
-                        onChange={(e) => handleChange(e)}
-                        required={true}
-                        options={dataSelect}
-                    />
+            {page === 0 ? 
+                <div style={{
+                    width: '90%', 
+                    display:'flex', 
+                    flexDirection: 'column', 
+                    justifyContent: 'center', 
+                    alignItems: 'center', 
+                }}>
                     <InputField
-                        id={'edtQtd'}
+                        id={'edtQtdOfItens'}
                         label={'Quantidade'}
-                        onInput={(e) => handleChange(e)}
-                        required={true}
+                        type={"number"}
+                        onInput={(e)=>setAmountItens(+e.target.value)}
+                        required={false}
+                        value={amountItens}
+                        min={1}
+                        max={10}
                     />
-                    {}
-                    <InputField
-                        id={'edtMotivo'}
-                        label={'Motivo'}
-                        onInput={(e) => handleChange(e)}
-                        required={true}
+                    <Button 
+                        id={'btnChangePage'} 
+                        type={'button'} 
+                        text={'Confirmar'} 
+                        onClick={()=>setPage(1)} 
                     />
-                </div>
-                <Button
-                    id={'btnSend'}
-                    type={"submit"}
-                    text={'Enviar'}
-                />
-                {loading && <Loader />}
-            </form>
+                </div> 
+                :
+                <form className={css.form}>
+                    <div className={css.inputs}>
+                        {
+                            <Inputs 
+                                qtd={amountItens} 
+                                options={dataSelect} 
+                                onchange={(e) => handleChange(e)} 
+                            />
+                        }
+                        <InputField
+                            id={'edtMotivo'}
+                            label={'Motivo'}
+                            onInput={(e) => handleChange(e)}
+                            required={true}
+                        />
+                    </div>
+                    <Button
+                        id={'btnSend'}
+                        type={"button"}
+                        text={'Enviar'}
+                        onClick={()=>handleSubmit()}
+                    />
+                    <Button 
+                        id={'btnBack'}
+                        type={'button'}
+                        text={'Voltar'}
+                        onClick={() => setPage(0)}
+                    />
+                    {loading && <Loader />}
+                </form>
+            }
         </div>
     )
 }

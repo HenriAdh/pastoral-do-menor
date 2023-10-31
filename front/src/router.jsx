@@ -10,9 +10,9 @@ import Report from "./pages/subPages/report";
 import Stock from "./pages/subPages/reports/stock";
 import Admin from "./pages/admin";
 import ViewItens from "./pages/subPages/view-item";
-import NewRequest from "./pages/subPages/new-Request";
 import ViewRequest from "./pages/subPages/view-requests";
 import RequestReport from "./pages/subPages/reports/request";
+import NewRequest from "./pages/subPages/new-Request";
 
 const Routers = () => {
     return (
