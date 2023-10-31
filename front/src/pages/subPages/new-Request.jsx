@@ -3,7 +3,7 @@ import InputField from "../../components/input-field";
 import Button from "../../components/button";
 import Loader from "../../components/loader";
 import Select from "../../components/select";
-import { selectAllStock } from "../../hooks/firebase";
+import { insertRequisicao, selectAllStock } from "../../hooks/firebase";
 import css from './css/newEntry.module.css';
 
 const NewRequest = () => {
@@ -12,25 +12,16 @@ const NewRequest = () => {
     const [loading, setLoading] = useState(false);
 
     const fetchData = useCallback(async () => {
-        const data = await selectAllStock();
+        const dbData = await selectAllStock();
+        const itens = dbData.docs.map((doc) =>({ ...doc.data(), id: doc.id }))
+        const prevData = itens.map((item) => {
+            return {
+                desc: item.material,
+                value: item.id,
+            }
+        });
 
-        const newObj = data.foreach(item => ({value: item.id, opt: item.material}))
-        console.log(newObj);
-
-        setDataSelect([
-            {
-                value: '0',
-                opt: 'Caderno',
-            },
-            {
-                value: '1',
-                opt: 'Arroz',
-            },
-            {
-                value: '2',
-                opt: 'Livro',
-            },
-        ])
+        setDataSelect(prevData);
     }, [])
     useEffect(()=>{fetchData()}, [fetchData]);
 
@@ -43,12 +34,13 @@ const NewRequest = () => {
 
     const handleSubmit = () => {
         setLoading(true);
-
+        insertRequisicao()
     }
 
     return(
         <div>
             <h2>Nova requisição</h2>
+            {}
             <form action={""} className={css.form} onSubmit={handleSubmit}>
                 <div className={css.inputs}>
                     <Select
@@ -59,8 +51,15 @@ const NewRequest = () => {
                         options={dataSelect}
                     />
                     <InputField
+                        id={'edtQtd'}
+                        label={'Quantidade'}
+                        onInput={(e) => handleChange(e)}
+                        required={true}
+                    />
+                    {}
+                    <InputField
                         id={'edtMotivo'}
-                        label={'Categoria'}
+                        label={'Motivo'}
                         onInput={(e) => handleChange(e)}
                         required={true}
                     />
