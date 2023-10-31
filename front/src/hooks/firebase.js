@@ -156,7 +156,6 @@ export const insertRequisicao = async (obj) => {
         const dbData = await getDocs(users)
         const usersDoc = dbData.docs.map((doc)=>({...doc.data(), id: doc.id}))
         const userRequest = usersDoc.filter((u) => u.uid === user.uid)
-        console.log(userRequest);
         const newObj = {
             dtRequisicao: date.toLocaleString(),
             localDeOrigem: userRequest[0].origin,
@@ -164,7 +163,6 @@ export const insertRequisicao = async (obj) => {
             status: 'Aberta',
             user: user.uid,
         }
-        console.log(newObj);
         const req = await addDoc(requisicoes, newObj);
         obj.itens.forEach(async item => {
             await addDoc(itensRequisitados, {
