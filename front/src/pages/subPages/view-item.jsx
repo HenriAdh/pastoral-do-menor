@@ -62,7 +62,7 @@ const ViewItens = () => {
                     children={
                         <ModalViewItem
                             id={item.id} 
-                            oldAmount={item.oldAmount} 
+                            oldAmount={item.oldValue} 
                             onFinish={()=>setItem({id: '',})} 
                         />
                     } 

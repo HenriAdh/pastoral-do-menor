@@ -72,7 +72,7 @@ const NewRequest = () => {
         }
         const newObj = {
             motivo: formData.edtMotivo,
-            itens
+            itens: itens,
         }
         const result = await insertRequisicao(newObj);
         alert(result);

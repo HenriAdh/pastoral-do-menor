@@ -190,7 +190,6 @@ export const updateRequisicao = async (id, obj) => {
             idUser: user.uid,
         }
         await addDoc(logRequisicoes, log);
-        await addDoc(itensRequisitados, )
         return 'Requisicao atendida.';
     } catch (e) {
         console.log(e);
@@ -198,14 +197,12 @@ export const updateRequisicao = async (id, obj) => {
     }
 }
 
-export const selectRequisicoes = async (where) => {
-    const itens = await getDocs(stock);
-    if (where) itens.filter((item) => item.status === where)
+export const selectRequisicoes = async () => {
+    const itens = await getDocs(requisicoes);
     return itens;
 }
 
-export const selectItensReq = async (idReq) => {
+export const selectItensReq = async () => {
     const itens = await getDocs(itensRequisitados);
-    itens.filter((item)=>item.idRequisicao === idReq);
     return itens
 }
