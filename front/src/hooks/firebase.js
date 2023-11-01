@@ -72,6 +72,13 @@ export const getUid = async () => {
     return user ? user : false;
 }
 
+export const verifyAdmin = async (userId) => {
+    const data = await getDocs(users);
+    const formatData = data.docs.map((doc)=>({ ...doc.data(), id: doc.id }))
+    const user = formatData.filter((users)=>users.uid === userId);
+    return user[0].admin === true;
+}
+
 export const insertStock = async (obj) => {
     const date = new Date();
     const user = await getUid();

@@ -2,19 +2,22 @@ import React, { useCallback, useEffect, useState } from "react";
 import css from './css/newEntry.module.css';
 import InputField from "../../components/input-field";
 import Button from '../../components/button';
-import { getUid, insertStock } from "../../hooks/firebase"; 
+import { getUid, insertStock, verifyAdmin } from "../../hooks/firebase"; 
 import Loader from "../../components/loader";
 import { useNavigate } from "react-router-dom";
 
 const NewEntry = () => {
     const [entry, setEntry] = useState({});
     const [loading, setLoading] = useState(false);
+    const [userAdmin, setUserAdmin] = useState(false);
 
     const navigate = useNavigate();
 
     const checkAuth = useCallback(async () => {
         const user = await getUid();
         if(!(user)) return navigate('/');
+        const isAdmin = await verifyAdmin(user.uid);
+        setUserAdmin(isAdmin);
     }, [navigate])
     useEffect(() => {checkAuth()}, [checkAuth]);
 
@@ -59,7 +62,7 @@ const NewEntry = () => {
     return(
         <div>
             <h2>Nova entrada</h2>
-            <form action={""} className={css.form} onSubmit={handleSubmit}>
+            {userAdmin === true ? <form action={""} className={css.form} onSubmit={handleSubmit}>
                 <div className={css.inputs}>               
                     <InputField
                         id={'edtCategory'}
@@ -104,7 +107,7 @@ const NewEntry = () => {
                     text={'Enviar'}
                 />
                 {loading && <Loader />}
-            </form>
+            </form> : <p>Usuánio não tem permissão para adicionar itens no estoque.</p>}
         </div>
     )
 }

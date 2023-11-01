@@ -77,7 +77,7 @@ const ModalViewItem = ({id, oldAmount=0, onFinish}) => {
                 style={{
                     backgroundColor: '#F00',
                     borderRadius: '5px',
-                    color: '#000',
+                    color: '#FFF',
                     padding: '5px',
                     fontWeight: 'bolder'
                 }}

@@ -1,16 +1,11 @@
 import React, { Suspense } from "react";
 import css from './css/homePage.module.css';
 import { Outlet } from "react-router";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { logOutUser } from "../hooks/firebase";
 
 const HomePage = () => {
-    const navigate = useNavigate();
-    const checkAdmin = () => {
-        return true;
-    }
-    
-    const isAdmin = checkAdmin();
+
     const logOut = () => {
         logOutUser();
     }
@@ -19,7 +14,7 @@ const HomePage = () => {
         <div className="center">
             <div className={css.homePage}>
                 <div className="DivBox hcenter gap5">
-                    {isAdmin?<img src="../../defaultUser.png" alt="admin" height={'20px'} onClick={() => navigate('/hangarekamaori') } />:<></>}
+                    {<img src="../../defaultUser.png" alt="admin" height={'20px'} />}
                     <span>Controle de estoque - Pastoral do Menor</span>
                 </div>
                 <div className="DivBox">

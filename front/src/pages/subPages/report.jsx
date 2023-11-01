@@ -2,15 +2,15 @@ import React, { Suspense, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 
 const Report = () => {
-    const [page, setPage] = useState('Relatório');
+    const [page, setPage] = useState('Estoque');
 
     return(
         <div>
-            <h2>{page}</h2>
+            <h2>Relatórios</h2>
             <div className="DivBox center hcenter">
                 <div 
-                    onClick={()=>setPage('Relatório')} 
-                    className={page==='Relatório' ? 'selected':''}
+                    onClick={()=>setPage('Estoque')} 
+                    className={page==='Estoque' ? 'selected':''}
                 >
                     <Link to='estoque' className="margin button link">Estoque</Link>
                 </div>

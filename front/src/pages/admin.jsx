@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import css from './css/admin.module.css'
 import { useNavigate, Link } from "react-router-dom";
-import { callbackend } from "../hooks/fetch";
 import { getUid } from "../hooks/firebase";
 
 const Admin = () => {
@@ -12,19 +11,9 @@ const Admin = () => {
     const checkAuth = useCallback(async () => {
         const user = await getUid();
         if(!(user)) return navigate('/');
+        if (user) setAdm(true);
     }, [navigate])
     useEffect(() => {checkAuth()}, [checkAuth]);
-    
-    const verifyAdmin = async () => { 
-        let isAdmin;
-        const result = await getUid();
-        isAdmin = result ? await callbackend('login?search='+result, 'GET') : false;
-        return isAdmin.adm
-    };
-    useEffect(() => {
-        setAdm(verifyAdmin)
-        adm ? console.log('') : navigate('/home/relatorio/estoque');
-    }, [navigate, adm]);
 
     return (
         <div className="center">
