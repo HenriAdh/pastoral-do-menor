@@ -4,7 +4,6 @@ import {
     collection, 
     doc,
     addDoc,
-    getDoc,
     getDocs,
     updateDoc,
     deleteDoc,
@@ -100,10 +99,17 @@ export const insertStock = async (obj) => {
     }
 }
 
-export const selectItemStock = async (id) => {
-    const docItem = doc(db, 'stock', id);
-    const item = await getDoc(docItem);
-    return item;
+export const selectLogStock = async () => {
+    const itens = await getDocs(logStock);
+    const logItens = itens.docs.map((doc) =>({ ...doc.data(), id: doc.id }))
+
+    const usersLog = await getDocs(users);
+    const logUsers = usersLog.docs.map((doc) =>({ ...doc.data(), id: doc.id }))
+
+    const stockItens = await getDocs(stock);
+    const logItensStock = stockItens.docs.map((doc) =>({ ...doc.data(), id: doc.id }))
+
+    return [logItens, logUsers, logItensStock];
 }
 
 export const selectAllStock = async () => {
