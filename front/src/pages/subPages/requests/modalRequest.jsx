@@ -1,11 +1,13 @@
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import Loader from "../../../components/loader";
-import { updateRequisicao } from "../../../hooks/firebase";
+import { selectAllStock, selectItensReq, updateRequisicao } from "../../../hooks/firebase";
 import styles from './view-req.module.css';
 
 const ModalViewReq = ({id, onFinish, data}) => {
     const [loading, setLoading] = useState(false);
-    const [status, setStatus] = useState('');
+    const [status, setStatus] = useState('Aberta');
+    const [itens, setItens] = useState([]);
+    const [reqItens, setReqItens] = useState([]);
 
     const atendReq = async () => {
         setLoading(true);
@@ -25,8 +27,28 @@ const ModalViewReq = ({id, onFinish, data}) => {
     }
 
     const handleChange = (e) => {
-        setStatus(e.target.value)
+        setStatus(e.target.value);
     }
+
+
+    const fetchItens = useCallback(async () => {
+        const dataItensReq = await selectItensReq();
+        const allItensReq = dataItensReq.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+
+        const reqItens = allItensReq.filter((item) => item.idRequisicao === data.id)
+
+        setReqItens(reqItens);
+
+        const dataItens = await selectAllStock();
+        const allItens = dataItens.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        
+        const itensfetched = reqItens.map((item) => (allItens.filter((item2) => item2.id === item.idItem)))
+        setItens(itensfetched);
+    }, [data.id])
+
+    useEffect(()=>{
+        fetchItens();
+    }, [fetchItens])
 
     return (<>
         <input 
@@ -40,18 +62,26 @@ const ModalViewReq = ({id, onFinish, data}) => {
             <h1>Atender Requisição</h1>
 
             <div style={{marginBottom: '15px'}}>
-                <p><b>ORIGEM: </b>{data.origin}</p>
+                <p><b>ORIGEM: </b>{data.localDeOrigem}</p>
                 <p><b>MOTIVO: </b>{data.motivo}</p>
-                {data.itens.foreach((item, index) => {
-                    return <p key={index}><b>ITEM {index+1}: </b>{item}</p>
+                {itens.map((item, index) => {
+                    return <p 
+                        key={index}>
+                            <b>ITEM {index+1}: </b>{reqItens[index].qtd}{item[0].uni} de {item[0].material}
+                        </p>
                 })}
             </div>
 
             <label htmlFor='edtNewStatus'>Selecione o status: </label>
-            <select id="edtNewStatus" onChange={(e) => handleChange(e)}>
-                <option value="" selected >Aberta</option>
-                <option value="Aprovada"></option>
-                <option value="Reprovada"></option>
+            <select 
+                style={{padding: '5px 10px'}}
+                id="edtNewStatus" 
+                onChange={(e) => handleChange(e)}
+                defaultValue={'Aberta'}
+            >
+                <option value="Aberta">Aberta</option>
+                <option value="Aprovada">Aprovada</option>
+                <option value="Reprovada">Reprovada</option>
             </select>
             <input
                 type="button"
@@ -61,7 +91,7 @@ const ModalViewReq = ({id, onFinish, data}) => {
                 style={{
                     backgroundColor: '#00F',
                     borderRadius: '5px',
-                    color: '#000',
+                    color: '#FFF',
                     padding: '5px',
                     fontWeight: 'bolder'
                 }}

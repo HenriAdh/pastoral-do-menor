@@ -8,7 +8,7 @@ import ModalViewReq from "./requests/modalRequest";
 
 const ViewRequest = () => {
     const [data, setData] = useState([])
-    const [item, setItem] = useState({id: '',})
+    const [item, setItem] = useState({id: '', index: -1})
     const [requests, setRequests] = useState([])
 
     const navigate = useNavigate();
@@ -22,8 +22,7 @@ const ViewRequest = () => {
         const dbData = await selectRequisicoes();
         const itens = dbData.docs.map((doc) =>({ ...doc.data(), id: doc.id }))
         setRequests(itens);
-        console.log(itens)
-        const prevData = itens.map((item) => {
+        const prevData = itens.map((item, i) => {
             const date = item.dtRequisicao.split(', ')
             return {
                 'Data': date[0],
@@ -36,7 +35,8 @@ const ViewRequest = () => {
                     value={'Atender'} 
                     onClick={() => setItem({
                         id: item.id, 
-                        oldValue: item.status
+                        oldValue: item.status,
+                        index: i,
                     })} 
                     style={{
                         backgroundColor: '#FFF',
@@ -67,8 +67,11 @@ const ViewRequest = () => {
                     children={
                         <ModalViewReq
                             id={item.id}
-                            data={requests}
-                            onFinish={()=>setItem({id: '',})} 
+                            data={requests[item.index]}
+                            onFinish={()=>{
+                                setItem({id: '', index: -1});
+                                fetchDataTable();
+                            }}
                         />
                     } 
                 /> : <></>
