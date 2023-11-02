@@ -27,8 +27,8 @@ const ViewItens = () => {
             const retorno = {
                 'Nome': item.material,
                 'Descrição': item.description,
-                'Unid': item.uni,
-                'Qtde': item.amount,
+                'Quantidade': item.amount,
+                'Unidade': item.uni,
                 'Categoria': item.category,
                 'Localização': item.location,
             }

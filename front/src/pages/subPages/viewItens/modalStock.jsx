@@ -10,7 +10,8 @@ const ModalViewItem = ({id, oldAmount=0, onFinish}) => {
     const saveNewAmount = async () => {
         setLoading(true);
         try {
-            const result = await updateStock(id, {amount: amount})
+            const diff = oldAmount < amount ? amount - oldAmount : oldAmount - amount;
+            const result = await updateStock(id, {amount: amount, type: oldAmount > amount ? 'Saída' : 'Entrada', diff})
             alert(result);
             setLoading(false);
             onFinish();

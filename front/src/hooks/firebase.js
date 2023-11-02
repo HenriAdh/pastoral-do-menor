@@ -99,19 +99,6 @@ export const insertStock = async (obj) => {
     }
 }
 
-export const selectLogStock = async () => {
-    const itens = await getDocs(logStock);
-    const logItens = itens.docs.map((doc) =>({ ...doc.data(), id: doc.id }))
-
-    const usersLog = await getDocs(users);
-    const logUsers = usersLog.docs.map((doc) =>({ ...doc.data(), id: doc.id }))
-
-    const stockItens = await getDocs(stock);
-    const logItensStock = stockItens.docs.map((doc) =>({ ...doc.data(), id: doc.id }))
-
-    return [logItens, logUsers, logItensStock];
-}
-
 export const selectAllStock = async () => {
     const itens = await getDocs(stock);
     return itens;
@@ -123,13 +110,13 @@ export const updateStock = async (id, obj) => {
     if (!(user)) return 'Usuário não permitido.';
     try {
         const docItem = doc(db, 'stock', id);
-        await updateDoc(docItem, obj)
+        await updateDoc(docItem, {amount: obj.amount})
         const log = {
-            alteracao: 'Update',
+            alteracao: obj.type,
             dtAlteracao: date.toLocaleString(),
             idItem: id,
             idUser: user.uid,
-            qtd: obj.amount,
+            qtd: obj.diff,
         }
         await addDoc(logStock, log);
         return 'Quantidade atualizada.';
@@ -218,4 +205,36 @@ export const selectRequisicoes = async () => {
 export const selectItensReq = async () => {
     const itens = await getDocs(itensRequisitados);
     return itens
+}
+
+export const selectLogStock = async () => {
+    const itens = await getDocs(logStock);
+    const logItens = itens.docs.map((doc) =>({ ...doc.data(), id: doc.id }))
+
+    const usersLog = await getDocs(users);
+    const logUsers = usersLog.docs.map((doc) =>({ ...doc.data(), id: doc.id }))
+
+    const stockItens = await getDocs(stock);
+    const logItensStock = stockItens.docs.map((doc) =>({ ...doc.data(), id: doc.id }))
+
+    return [logItens, logUsers, logItensStock];
+}
+
+export const selectLogRequest = async () => {
+    const itens = await getDocs(logRequisicoes);
+    const logRequests = itens.docs.map((doc) =>({ ...doc.data(), id: doc.id }))
+
+    const requests = await getDocs(requisicoes);
+    const logReq = requests.docs.map((doc) =>({ ...doc.data(), id: doc.id }))
+
+    const itensReq = await getDocs(itensRequisitados);
+    const logItensReq = itensReq.docs.map((doc) =>({ ...doc.data(), id: doc.id }))
+
+    const usersLog = await getDocs(users);
+    const logUsers = usersLog.docs.map((doc) =>({ ...doc.data(), id: doc.id }))
+
+    const stockItens = await getDocs(stock);
+    const logItensStock = stockItens.docs.map((doc) =>({ ...doc.data(), id: doc.id }))
+
+    return [logRequests, logReq, logItensReq, logUsers, logItensStock];
 }

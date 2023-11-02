@@ -60,10 +60,6 @@ const LoginPage = () => {
                             <Button id={'btnSignIn'} type="submit" text={'Entrar'} />
                         </div>
                             <Link to={'./restaurar-senha'} className="link margintop">Esqueci minha senha?</Link>
-                            <br/><br/><br/>
-                            <p><u>E-mail e senhas temporarias: </u></p>
-                            <>E-mail: emailteste@email.com</><br />
-                            <>Senha: senhaTeste123</>
                     </form>
                 }
             />
