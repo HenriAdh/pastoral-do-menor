@@ -28,7 +28,7 @@ const Stock = () => {
                 'item': newItem[0].material,
                 itemDescription: newItem[0].description,
                 alteracao: item.alteracao,
-                qtd: item.alteracao === 'Saída' ? '-'+item.qtd : '+'+item.qtd,
+                qtd: item.alteracao === 'Saída' ? '-'+item.qtd : item.alteracao === 'Remoção'? '-'+item.qtd : '+'+item.qtd,
                 unidade: newItem[0].uni,
                 dtAlteracao: item.dtAlteracao,
                 user: newUser[0].name,
@@ -75,7 +75,7 @@ const Stock = () => {
             { data.length > 0 ? 
             <Table 
                 dataTable={data}
-                focus={"Item"}
+                focus={"Descrição"}
             /> : <Loader /> }
         </div>
     )

@@ -1,9 +1,9 @@
 import { useState } from "react";
 import Loader from "../../../components/loader";
-import { deleteStock, updateStock } from "../../../hooks/firebase";
+import { updateStock } from "../../../hooks/firebase";
 import styles from './view-item.module.css';
 
-const ModalViewItem = ({id, oldAmount=0, onFinish}) => {
+const ModalViewItem = ({id, oldAmount, onFinish}) => {
     const [amount, setAmount] = useState(oldAmount);
     const [loading, setLoading] = useState(false);
 
@@ -26,7 +26,7 @@ const ModalViewItem = ({id, oldAmount=0, onFinish}) => {
     const deleteItem = async () => {
         setLoading(true);
         try {
-            const result = await deleteStock(id);
+            const result = await updateStock(id, {amount: 0, type: 'Removida', diff: oldAmount});
             alert(result);
             setLoading(false);
             onFinish();
@@ -47,7 +47,7 @@ const ModalViewItem = ({id, oldAmount=0, onFinish}) => {
             className={styles.btnExit}
         />
         <div className={styles.formModal}>
-            <h1>Saída de material</h1>
+            <h1>Alterar quantidade</h1>
             <label htmlFor='edtNewAmount'>Selecione a nova quantidade: </label>
             <input 
                 type='number' 
@@ -74,7 +74,7 @@ const ModalViewItem = ({id, oldAmount=0, onFinish}) => {
                 type="button"
                 id="btnDelete"
                 onClick={() => deleteItem()}
-                value={'Remover'} 
+                value={'Remover item'} 
                 style={{
                     backgroundColor: '#F00',
                     borderRadius: '5px',

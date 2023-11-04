@@ -10,12 +10,12 @@ const Select = ({ id, preselect, options, onChange=()=>{}, required=false }) => 
                 className={style.select}
                 onChange={onChange}
                 required={required} 
-                defaultValue={0}
+                defaultValue={'N/A'}
             >
                 <option 
-                    value={0}
+                    value={'N/A'}
                     disabled={true} 
-                    className={style.option} 
+                    className={style.option}
                 >
                     {preselect}
                 </option>

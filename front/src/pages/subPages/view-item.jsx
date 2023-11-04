@@ -45,7 +45,15 @@ const ViewItens = () => {
 
             return retorno
         });
-        if (prevData.length > 0) setData(prevData);
+        const positiveData = prevData.filter((item) => item.Quantidade !== 0);
+        const negativeData = prevData.filter((item) => item.Quantidade === 0);
+        positiveData.sort((a, b) => a.Nome > b.Nome ? true : -1)
+        negativeData.sort((a, b) => a.Nome > b.Nome ? true : -1)
+
+        const newData = [];
+        newData.push(...positiveData, ...negativeData);
+
+        if (prevData.length > 0) setData(newData);
         else setData([{
             'Nome': '',
             'Descrição': 'Não há itens no estoque',
@@ -58,7 +66,6 @@ const ViewItens = () => {
     useEffect(() => {
         checkAuth();
         fetchDataTable();
-        // eslint-disable-next-line
     }, [checkAuth, fetchDataTable]);
 
     return(

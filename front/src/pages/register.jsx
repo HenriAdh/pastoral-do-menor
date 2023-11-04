@@ -5,7 +5,6 @@ import Card from "../components/card";
 import InputField from "../components/input-field";
 import Button from "../components/button";
 import CheckBox from "../components/checkbox";
-import { callbackend } from "../hooks/fetch";
 import { getUid, signUp } from "../hooks/firebase"; 
 import Loader from "../components/loader";
 
@@ -18,7 +17,6 @@ const Register =() =>{
         const user = await getUid();
         if(!(user)) return navigate('/');
     }, [navigate]);
-
     useEffect(() => {checkAuth()}, [checkAuth]);
 
     const handleChange = (e) => {
@@ -31,31 +29,26 @@ const Register =() =>{
         try{
             const result = await createUser(formData);
             alert(result);
-            setLoading(false);
             navigate('/');
         }
         catch(err){
             alert(err)
+        } finally {
             setLoading(false);
+
         }
     }
 
     const createUser = async (arrayUser) => {
-        const url = '/register';
-        const method = 'POST';
-        let obj = {
-            name: arrayUser.edtName,
-            username: arrayUser.edtUserName,
-            email: arrayUser.edtEmail,
-            adm: arrayUser.chkAdm === 'on',
-        }
         try {
-            const newSignUp = await signUp(arrayUser.edtEmail, arrayUser.edtPass);
-            if (newSignUp) {
-                obj = {...obj, uid : newSignUp.user.uid}
-                const result = await callbackend(url, method, obj);
-                return result.text();
-            }
+            const newSignUp = await signUp(
+                arrayUser.edtEmail,
+                arrayUser.edtPass,
+                arrayUser.edtName,
+                arrayUser.edtOrigin,
+                arrayUser.chkAdm === 'on'
+            );
+            return newSignUp;
         } catch (err) {
             return err;
         }
@@ -69,7 +62,6 @@ const Register =() =>{
                 content={
                     <form action="" className="fullwidth" onSubmit={handleSubmit}>
                         <InputField id={'edtName'} label={'Nome:'} onInput={(e) => handleChange(e)} />
-                        <InputField id={'edtUserName'} label={'Nome de Usuario:'} onInput={(e) => handleChange(e)} />
                         <InputField id={'edtEmail'} label={'E-mail:'} onInput={(e) => handleChange(e)} />
                         <InputField id={'edtPass'} label={'Senha:'} type={'password'} onInput={(e) => handleChange(e)} />
                         <CheckBox id={'chkAdm'} label={' Administrador'} onChange={(e) => handleChange(e)} />

@@ -92,7 +92,7 @@ const NewRequest = () => {
                 }}>
                     <InputField
                         id={'edtQtdOfItens'}
-                        label={'Quantidade'}
+                        label={'Quantos itens serão solicitados?'}
                         type={"number"}
                         onInput={(e)=>setAmountItens(+e.target.value)}
                         required={false}

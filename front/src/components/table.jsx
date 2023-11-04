@@ -29,7 +29,10 @@ export const TableBody = ({ dataBody }) => {
                         <tr key={i}>
                             {
                                 keys.map(key => {
-                                    return <td key={key}>{row[key]}</td>
+                                    return <td key={key} style={{
+                                        borderBottom: '1px solid black',
+                                        padding: '8px 1px'
+                                    }} >{row[key]}</td>
                                 })
                             }
                         </tr>

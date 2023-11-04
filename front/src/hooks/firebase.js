@@ -6,7 +6,6 @@ import {
     addDoc,
     getDocs,
     updateDoc,
-    deleteDoc,
 } from "firebase/firestore";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
 
@@ -31,11 +30,12 @@ const requisicoes = collection(db, "requisicoes");
 const itensRequisitados = collection(db, "itensRequisitados");
 const logRequisicoes = collection(db, "logRequisicoes");
 
-export const signUp = async (email, pass, name='', origin='') => {
+export const signUp = async (email, pass, name='', origin='', adm=false) => {
     if (!getUid) return 'Usuário não permitido.';
     try {
         const result = await createUserWithEmailAndPassword(auth, email, pass);
         const user = {
+            admin: adm,
             ativo: true,
             email,
             name,
@@ -43,9 +43,11 @@ export const signUp = async (email, pass, name='', origin='') => {
             uid: result.user.uid,
         };
         await addDoc(users, user);
-        return result;
-    } catch (err) {
-        return err;
+        return 'Usuário criado com sucesso.';
+    } catch (e) {
+        console.clear()
+        console.log(e)
+        return 'Falha ao criar usuário';
     }
 }
 
@@ -94,6 +96,7 @@ export const insertStock = async (obj) => {
         await addDoc(logStock, log);
         return 'Item adicionado.';
     } catch (e) {
+        console.clear()
         console.log(e);
         return 'Erro ao adicionar item';
     }
@@ -121,30 +124,9 @@ export const updateStock = async (id, obj) => {
         await addDoc(logStock, log);
         return 'Quantidade atualizada.';
     } catch (e) {
+        console.clear()
         console.log(e);
         return 'Erro ao atualizar quantidade.';
-    }
-}
-
-export const deleteStock = async (id) => {
-    const user = await getUid();
-    const date = new Date();
-    if (!(user)) return 'Usuário não permitido.';
-    try {
-        const docItem = doc(db, 'stock', id);
-        await deleteDoc(docItem)
-        const log = {
-            alteracao: 'Delete',
-            dtAlteracao: date.toLocaleString(),
-            idItem: id,
-            idUser: user.uid,
-            qtd: '0',
-        }
-        await addDoc(logStock, log);
-        return 'Item removido.';
-    } catch(e) {
-        console.log(e);
-        return 'Erro ao remover item.';
     }
 }
 
@@ -172,6 +154,7 @@ export const insertRequisicao = async (obj) => {
         });
         return 'Requisicao adicionada.';
     } catch (e) {
+        console.clear()
         console.log(e);
         return 'Erro ao adicionar requisicao';
     }
@@ -192,6 +175,7 @@ export const updateRequisicao = async (id, obj) => {
         await addDoc(logRequisicoes, log);
         return 'Requisicao atendida.';
     } catch (e) {
+        console.clear()
         console.log(e);
         return 'Erro ao atender requisicao.';
     }

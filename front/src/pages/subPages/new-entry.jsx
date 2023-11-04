@@ -5,6 +5,7 @@ import Button from '../../components/button';
 import { getUid, insertStock, verifyAdmin } from "../../hooks/firebase"; 
 import Loader from "../../components/loader";
 import { useNavigate } from "react-router-dom";
+import Select from "../../components/select";
 
 const NewEntry = () => {
     const [entry, setEntry] = useState({});
@@ -83,29 +84,40 @@ const NewEntry = () => {
                         required={true}
                     />
                     <InputField
-                        id={'edtUnits'}
-                        label={'Unidade'}
-                        onInput={(e) => handleChange(e)}
-                        required={true}
-                    />              
-                    <InputField
-                        id={'edtAmount'}
-                        label={'Quantidade'}
-                        onInput={(e) => handleChange(e)}
-                        required={true}
-                    />
-                    <InputField
                         id={'edtLocation'}
                         label={'Localização'}
                         onInput={(e) => handleChange(e)}
                         required={true}
                     />
+                    <InputField
+                        id={'edtAmount'}
+                        label={'Quantidade'}
+                        type="number"
+                        onInput={(e) => handleChange(e)}
+                        required={true}
+                    />
+                    <Select  
+                        id={'edtUnits'}
+                        preselect={'Unidade'}
+                        options={[
+                            {value: 'un', desc: 'un'},
+                            {value: 'pc', desc: 'pc'},
+                            {value: 'cx', desc: 'cx'},
+                            {value: 'kg', desc: 'kg'},
+                            {value: 'g ', desc: 'g '},
+                            {value: 'fd', desc: 'fd'},
+                            {value: 'pct', desc: 'pct'},
+                        ]}
+                        onChange={(e) => handleChange(e)}
+                        required={true}
+                    /> 
                 </div>
                 <Button
                     id={'btnSend'}
                     type={"submit"}
                     text={'Enviar'}
                 />
+                <div className="marginbottom" />
                 {loading && <Loader />}
             </form> : <p>Usuánio não tem permissão para adicionar itens no estoque.</p>}
         </div>
