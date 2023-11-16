@@ -5,6 +5,7 @@ import Button from "../components/button";
 import Card from "../components/card";
 import { signIn } from "../hooks/firebase"; 
 import Loader from "../components/loader";
+import css from './css/login.module.css';
 
 const LoginPage = () => {
     const [formData, setFormData] = useState({});
