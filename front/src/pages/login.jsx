@@ -45,6 +45,7 @@ const LoginPage = () => {
                 width="70vw"
                 title={'Login'}
                 content={
+                    <>
                     <form action={""} onSubmit={handleSubmit} className="fullwidth" >
                         <InputField
                             id={'edtEmail'} 
@@ -62,6 +63,10 @@ const LoginPage = () => {
                         </div>
                             <Link to={'./restaurar-senha'} className="link margintop">Esqueci minha senha?</Link>
                     </form>
+                    <div style={{marginTop: '50px'}}>
+                    <img src="Logo-Pastoral.png" alt="logo pastoral da menor" width="30%" height="30%"/>
+                    </div>
+                    </>
                 }
             />
             {loading && <Loader />}

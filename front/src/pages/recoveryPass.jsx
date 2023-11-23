@@ -33,6 +33,7 @@ const RecoveryPage = () => {
                 width="70vw"
                 title={'Recuperar senha'}
                 content={
+                    <>
                     <form action="" className="fullwidth" onSubmit={handleSubmit}>
                         <InputField
                             id={'edtEmail'} 
@@ -44,6 +45,10 @@ const RecoveryPage = () => {
                         </div>
                         <Link to={'/'} className="link margintop" >Voltar</Link>
                     </form>
+                    <div style={{marginTop: '50px'}}>
+                    <img src="Logo-Pastoral.png" alt="logo pastoral da menor" width="30%" height="30%"/>
+                    </div>
+                    </>
                 }
             />
         </div>
