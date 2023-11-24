@@ -5,7 +5,7 @@ import Card from "../components/card";
 import InputField from "../components/input-field";
 import Button from "../components/button";
 import CheckBox from "../components/checkbox";
-import { getUid, signUp } from "../hooks/firebase"; 
+import { getUid, signUp, verifyAdmin } from "../hooks/firebase"; 
 import Loader from "../components/loader";
 
 const Register =() =>{
@@ -16,6 +16,8 @@ const Register =() =>{
     const checkAuth = useCallback(async () => {
         const user = await getUid();
         if(!(user)) return navigate('/');
+        const adm = await verifyAdmin(user.uid);
+        if(!adm) return navigate('/');
     }, [navigate]);
     useEffect(() => {checkAuth()}, [checkAuth]);
 
@@ -30,12 +32,10 @@ const Register =() =>{
             const result = await createUser(formData);
             alert(result);
             navigate('/');
-        }
-        catch(err){
+        } catch(err){
             alert(err)
         } finally {
             setLoading(false);
-
         }
     }
 
@@ -58,17 +58,17 @@ const Register =() =>{
         <div className="DivRegis center">
             <Card 
                 width="70vw"
-                title={'Registrar'}
+                title={'Registrar novo usuário'}
                 content={
                     <form action="" className="fullwidth" onSubmit={handleSubmit}>
-                        <InputField id={'edtName'} label={'Nome:'} onInput={(e) => handleChange(e)} />
+                        <InputField id={'edtOrigin'} label={'Origem:'} onInput={(e) => handleChange(e)} />
                         <InputField id={'edtEmail'} label={'E-mail:'} onInput={(e) => handleChange(e)} />
                         <InputField id={'edtPass'} label={'Senha:'} type={'password'} onInput={(e) => handleChange(e)} />
                         <CheckBox id={'chkAdm'} label={' Administrador'} onChange={(e) => handleChange(e)} />
                         <div className="DivButtons marginbottom">
                             <Button id={'btnSignUp'} type="submit" text={'Confirmar'} />
                         </div>
-                        <Link to={'/hangarekamaori'} className="link margintop">Voltar</Link>
+                        <Link to={'/home/relatorios/estoque'} className="link margintop">Voltar</Link>
                     </form>
                 }
             />

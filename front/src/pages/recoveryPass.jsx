@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import InputField from "../components/input-field";
 import Card from "../components/card";
 import Button from "../components/button";
+import { recoveryPass } from "../hooks/firebase";
 
 
 const RecoveryPage = () => {
@@ -24,6 +25,12 @@ const RecoveryPage = () => {
 
     const sendEmail = async (arrayEmail) => {
         // chama o back
+        try{
+            const res = await recoveryPass(arrayEmail['edtEmail'])
+            alert(res);
+        } catch(e){
+            console.log(e);
+        }
         return 'E-mail enviado.';
     }
 

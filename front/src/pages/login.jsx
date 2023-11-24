@@ -5,7 +5,6 @@ import Button from "../components/button";
 import Card from "../components/card";
 import { signIn } from "../hooks/firebase"; 
 import Loader from "../components/loader";
-import css from './css/login.module.css';
 
 const LoginPage = () => {
     const [formData, setFormData] = useState({});
@@ -29,9 +28,6 @@ const LoginPage = () => {
     }
 
     const loginUser = async (arrayUser) => {
-        // Verifica se é o e-mail de teste
-        const userteste = arrayUser['edtEmail'] === 'emailteste@email.com' && arrayUser['edtPass'] === 'senhaTeste123';
-        if (userteste) return true
         // verifica se é um e-mail de verdade
         const user = await signIn(arrayUser.edtEmail, arrayUser.edtPass);
         if (user.length!==0) return true
@@ -63,8 +59,8 @@ const LoginPage = () => {
                         </div>
                             <Link to={'./restaurar-senha'} className="link margintop">Esqueci minha senha?</Link>
                     </form>
-                    <div style={{marginTop: '50px'}}>
-                    <img src="Logo-Pastoral.png" alt="logo pastoral da menor" width="30%" height="30%"/>
+                    <div style={{ marginTop: '50px' }}>
+                        <img src="Logo-Pastoral.png" alt="logo pastoral da menor" width="20%"/>
                     </div>
                     </>
                 }

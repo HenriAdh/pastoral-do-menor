@@ -7,7 +7,7 @@ import {
     getDocs,
     updateDoc,
 } from "firebase/firestore";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from "firebase/auth"
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendPasswordResetEmail } from "firebase/auth"
 
 const firebaseConfig = {
     apiKey: "AIzaSyAHnjY9qj70_qy4ZekKgP4rpMRjLLGYelE",
@@ -77,7 +77,13 @@ export const verifyAdmin = async (userId) => {
     const data = await getDocs(users);
     const formatData = data.docs.map((doc)=>({ ...doc.data(), id: doc.id }))
     const user = formatData.filter((users)=>users.uid === userId);
-    return user[0].admin === true;
+    return user[0]?.admin === true;
+}
+
+export const recoveryPass = async (email) => {
+    const res = await sendPasswordResetEmail(auth, email);
+    console.log(res);
+    return res;
 }
 
 export const insertStock = async (obj) => {

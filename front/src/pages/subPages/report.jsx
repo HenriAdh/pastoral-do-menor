@@ -6,7 +6,7 @@ const Report = () => {
 
     return(
         <div>
-            <h2>Relatórios</h2>
+            <p>Relatórios</p>
             <div className="DivBox center hcenter">
                 <div 
                     onClick={()=>setPage('Estoque')} 
